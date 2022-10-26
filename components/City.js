@@ -1,18 +1,15 @@
-import { ListItem, ListItemText } from "@mui/material"
+import { Card, ListItem, ListItemText, Typography } from "@mui/material"
+import { useRouter } from "next/router"
 
-const City = ({name, country, month, year, id}) => {
+const City = ({ name, id, month, year, details }) => {
+    const router = useRouter()
     return (
-       <ListItem
-        sx={{mt:3, boxShadow: 3}}
-        style={{backgroundColor:'#FAFAFA'}}
-       >
 
-        <ListItemText
-            primary={name}
-            secondary={country}
-        />
+        <Card className="card" onClick={() => router.push(`/cities/${id}`)} minwidth={"40%"}>
+            <Typography>{name}</Typography>
+            {/* <p>{month} of {year}</p> */}
+        </Card>
 
-       </ListItem>
     )
 }
 
