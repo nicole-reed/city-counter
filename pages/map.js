@@ -17,6 +17,8 @@ function Map() {
     const [cities, setCities] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const countries = cities.map(city => city.country)
+
     const citiesWithCords = cities.map((city) => {
         return {
             markerOffset: 1,
@@ -71,6 +73,7 @@ function Map() {
                                         <Geography
                                             key={geo.rsmKey}
                                             geography={geo}
+                                            fill={countries.includes(geo.properties.name) ? "#99c8f1" : "black"}
                                             onMouseEnter={() => {
                                                 const { name } = geo.properties;
                                                 setContent(`${name}`)
@@ -91,7 +94,7 @@ function Map() {
                             </Geographies>
                             {markers.map(({ name, coordinates, markerOffset, id }) => (
                                 <Marker key={name} coordinates={coordinates}>
-                                    <circle r={1.5} stroke="#99c8f1" strokeWidth={1}
+                                    <circle r={1.5} stroke="#99c8f1" strokeWidth={.5}
                                         onMouseEnter={() => {
                                             setContent(`${name}`)
                                         }}

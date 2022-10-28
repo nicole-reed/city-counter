@@ -37,7 +37,9 @@ const AddCityForm = ({ currentCountry }) => {
             const colRef = collection(db, "cities")
             const { longitude, latitude } = await getCoords()
 
-            await addDoc(colRef, { ...city, email: currentUser.email, displayName: currentUser.displayName ? currentUser.displayName : currentUser.email.split("@")[0], userID: currentUser.uid, timestamp: serverTimestamp(), longitude, latitude })
+            // TODO
+            // consider rethinking how we are saving the pic, might not need all the user info besides userID
+            await addDoc(colRef, { ...city, email: currentUser.email, displayName: currentUser.displayName ? currentUser.displayName : currentUser.email.split("@")[0], userPic: currentUser.photoURL, userID: currentUser.uid, timestamp: serverTimestamp(), longitude, latitude })
 
 
             setCity({ name: '', country: '', month: '', year: '', details: '' })

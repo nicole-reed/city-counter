@@ -8,8 +8,9 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword
 } from "@firebase/auth";
-import { auth, provider } from "../firebase";
+import { auth, db, provider } from "../firebase";
 import { useState } from "react";
+import { addDoc, collection, doc, query, runTransaction, setDoc, where } from "@firebase/firestore";
 
 export default function LogIn() {
     const [signupEmail, setSignupEmail] = useState("");
@@ -18,18 +19,51 @@ export default function LogIn() {
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
 
-    const loginWithGoogle = () => {
-        signInWithPopup(auth, provider)
+
+
+    const loginWithGoogle = async () => {
+        const { user } = await signInWithPopup(auth, provider)
+        console.log('user', user)
+        const userDocRef = doc(db, "users", user.uid);
+
+        // make sure user doesnt already exist before saving to users collection
+        await runTransaction(db, async (transaction) => {
+
+            const existingUser = await transaction.get(userDocRef);
+            console.log('existing user', existingUser)
+
+            if (existingUser.exists()) {
+                return;
+            }
+
+            return transaction.set(userDocRef, { displayName: user.displayName, userPic: user.photoURL, email: user.email, userID: user.uid });
+        });
+        window.location.href = '/'
     }
 
     const signUp = async () => {
         try {
-            const user = await createUserWithEmailAndPassword(
+            const { user } = await createUserWithEmailAndPassword(
                 auth,
                 signupEmail,
                 signupPassword
             );
             console.log(user);
+
+            // make sure user doesnt already exist before saving to users collection
+            const userDocRef = doc(db, "users", user.uid);
+            await runTransaction(db, async (transaction) => {
+
+                const existingUser = await transaction.get(userDocRef);
+                console.log('existing user', existingUser)
+
+                if (existingUser.exists()) {
+                    return;
+                }
+                const placeholderName = user.email.split("@")[0]
+                return transaction.set(userDocRef, { displayName: placeholderName, userPic: 'https://user-images.githubusercontent.com/11250/39013954-f5091c3a-43e6-11e8-9cac-37cf8e8c8e4e.jpg', email: user.email, userID: user.uid });
+            });
+
         } catch (error) {
             console.log(error.message);
         }
@@ -42,6 +76,7 @@ export default function LogIn() {
                 loginEmail,
                 loginPassword
             );
+            window.location.href = '/'
         } catch (error) {
             console.log(error.message);
         }

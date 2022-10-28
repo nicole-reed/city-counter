@@ -8,6 +8,10 @@ import Loading from './Loading';
 import DeleteImage from './DeleteImage';
 import LinearIndeterminate from './LinearIndeterminate';
 
+// TODO
+// change filename when uploading so that it includes the userID as well so that we can
+// organize images by user and not necessarily by cityID only
+
 function UploadImage({ email }) {
     const { currentUser } = useAuth();
     const router = useRouter();

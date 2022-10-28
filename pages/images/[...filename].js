@@ -1,6 +1,6 @@
 import { doc, getDoc } from "@firebase/firestore"
 import { getDownloadURL, ref } from "@firebase/storage"
-import { Container, ImageList, ImageListItem } from "@mui/material"
+import { Avatar, Container, ImageList, ImageListItem } from "@mui/material"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Layout from "../../components/Layout"
@@ -15,6 +15,7 @@ export default function Image() {
     const [image, setImage] = useState([])
     const [loading, setLoading] = useState(true)
     const [city, setCity] = useState({})
+    console.log(city.userPic)
 
     const getCity = async () => {
         const docRef = doc(db, "cities", `${cityID}`)
@@ -43,7 +44,10 @@ export default function Image() {
         <Layout>
             <Container>
                 <h2><a href={`/cities/${cityID}`}>{city.name}</a>, <a href={`/countries/${city.country}`}>{city.country}</a></h2>
-                <p><a href={`/users/${city.userID}/${city.displayName ? city.displayName : city.email.split("@")[0]}`}>{city.displayName}</a></p>
+                <div className='pic-info'>
+                    <Avatar src={city.userPic}></Avatar>
+                    <p><a href={`/users/${city.userID}/${city.displayName ? city.displayName : city.email.split("@")[0]}`}>{city.displayName}</a></p>
+                </div>
                 <ImageList cols={1} gap={8}>
                     <ImageListItem >
                         <img src={image}>

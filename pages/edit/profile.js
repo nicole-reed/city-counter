@@ -15,6 +15,12 @@ export default function profile() {
     const [profilePic, setProfilePic] = useState(currentUser.photoURL)
     const [showProgressBar, setShowProgressBar] = useState(false)
 
+    // TODO
+    // make sure we are updating the user doc in the user's collection
+    // add forms to write 'about me' section 
+
+
+
     const uploadImage = async () => {
         try {
             if (imageUpload == null) return;
@@ -53,9 +59,10 @@ export default function profile() {
 
             <Container>
                 <h1 className="title-sm">Hey {currentUser.displayName ? currentUser.displayName : currentUser.email.split('@')[0]} </h1>
-                {!showProgressBar && profilePic ?
+                {profilePic ?
                     <img className="profile-img" src={profilePic} /> :
-                    <LinearIndeterminate />
+                    <img className="profile-img" src={currentUser.photoURL} />
+                    // <LinearIndeterminate />
                 }
 
 

@@ -9,6 +9,10 @@ import Cities from "../components/Cities";
 import AddCityForm from "../components/AddCityForm";
 import { CityContext } from "./CityContext";
 
+// TODO
+// get userID from query and then get the user and all their info from db to display the things we want on the profile
+
+
 export default function profile() {
     const { currentUser } = useAuth();
     const [cities, setCities] = useState([])

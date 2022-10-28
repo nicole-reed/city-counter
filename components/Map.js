@@ -15,6 +15,8 @@ function Map({ cities }) {
     // console.log('curentUser', currentUser)
     // const [cities, setCities] = useState([]);
     const [loading, setLoading] = useState(true);
+    const countries = cities.map(city => city.country)
+    console.log('countries', countries)
 
     const citiesWithCords = cities.map((city) => {
         return {
@@ -28,25 +30,6 @@ function Map({ cities }) {
     const markers = citiesWithCords.filter(marker => marker.coordinates[0] !== '')
     console.log('markers', markers)
 
-    // useEffect(() => {
-    //     const cityColRef = collection(db, "cities");
-
-    //     const cityQuery = query(cityColRef, where("email", ">=", currentUser))
-
-    //     const unsubscribe = onSnapshot(cityQuery, (querySnapshot) => {
-    //         setCities(querySnapshot.docs.map(doc => ({
-    //             ...doc.data(),
-    //             id: doc.id
-    //         })));
-    //         setLoading(false)
-    //     });
-
-    //     return unsubscribe;
-    // }, [])
-
-    // if (loading) {
-    //     return <Loading type="bubbles" color="lightblue" />
-    // }
     return (
 
         <div className='map' style={{
@@ -57,7 +40,6 @@ function Map({ cities }) {
             justifyContent: "center",
             alignItems: "center",
         }}>
-            {/* <h1 className="map-title">{currentUser}'s Cities</h1> */}
             <ReactTooltip>{content}</ReactTooltip>
             <div style={{ width: "80%" }}>
                 <ComposableMap data-tip="">
@@ -69,6 +51,7 @@ function Map({ cities }) {
                                     <Geography
                                         key={geo.rsmKey}
                                         geography={geo}
+                                        fill={countries.includes(geo.properties.name) ? "#99c8f1" : "black"}
                                         onMouseEnter={() => {
                                             const { name } = geo.properties;
                                             setContent(`${name}`)
