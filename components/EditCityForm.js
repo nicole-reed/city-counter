@@ -10,8 +10,8 @@ const EditCityForm = ({ cityDetails }) => {
     const router = useRouter();
     const cityID = router.query;
     const inputAreaRef = useRef();
-    const [city, setCity] = useState({ name: cityDetails.name, country: cityDetails.country, month: cityDetails.month, year: cityDetails.year, details: cityDetails.details })
-
+    const [city, setCity] = useState({ name: cityDetails.name, country: cityDetails.country, month: cityDetails.month, year: cityDetails.year, details: cityDetails.details ? cityDetails.details : '' })
+    console.log('city', city)
 
     const onSubmit = async () => {
         // update city

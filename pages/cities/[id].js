@@ -1,21 +1,61 @@
 import { collection, doc, getDoc, getDocs } from "@firebase/firestore"
-import { Grid, Typography, Container, Box, IconButton } from "@mui/material"
+import { Grid, Typography, Container, Box, IconButton, Avatar, Tooltip } from "@mui/material"
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import UploadImage from "../../components/UploadImage"
 import { db } from "../../firebase"
 import Layout from "../../components/Layout";
 import { useRouter } from "next/router"
 import { useAuth } from "../../Auth";
+import { useEffect, useState } from "react";
+import Loading from "../../components/Loading";
 
 const Detail = ({ cityProps }) => {
     const { currentUser } = useAuth();
     const city = JSON.parse(cityProps)
     const router = useRouter();
     const currentCity = router.query
+    const [user, setUser] = useState({})
+    const [loading, setLoading] = useState(true)
 
+    useEffect(() => {
+        async function getUser() {
+            const userDocRef = doc(db, "users", city.userID)
+            const docSnap = await getDoc(userDocRef)
+
+            if (docSnap.exists()) {
+                setUser(docSnap.data())
+            } else {
+                console.log('error fetching user')
+            }
+        }
+        getUser()
+        setLoading(false)
+    }, [])
+
+    if (loading) { return <Loading type="bubbles" color="lightblue" /> }
     return (
         <Layout>
             <Container>
+
+                <div className='profile-items'>
+                    <div className="user-tile">
+                        {city.userID == currentUser.uid &&
+                            <IconButton onClick={() => router.push(`/edit/${currentCity.id}`)}>
+                                <ModeEditIcon style={{ color: "#99c8f1" }} />
+                            </IconButton>
+                        }
+                        <Avatar sx={{ width: 96, height: 96 }} src={user.userPic}></Avatar>
+                        <Typography variant="p" component="div"><a href={`/users/${user.userID}`}>{user.displayName}</a></Typography>
+                        <Typography variant="h4" component="div">{city.name}</Typography>
+                        <Typography variant="p" component="div">{city.country}</Typography>
+                        <Typography variant="p" component="div">{city.month} {city.year}</Typography>
+                        {city.details && <Typography variant="h6" component="div">"{city.details}"</Typography>}
+
+                    </div>
+                    <UploadImage userID={user.userID} />
+                </div>
+
+                {/* 
                 <Grid
                     container
                     spacing={0}
@@ -35,7 +75,7 @@ const Detail = ({ cityProps }) => {
                             <Typography variant="h2" component="div">
                                 {city.name}
                             </Typography>
-                            {city.email == currentUser.email &&
+                            {city.userID == currentUser.uid &&
                                 <IconButton onClick={() => router.push(`/edit/${currentCity.id}`)}>
                                     <ModeEditIcon style={{ color: "#99c8f1" }} />
                                 </IconButton>
@@ -46,7 +86,7 @@ const Detail = ({ cityProps }) => {
                             {city.country}
                         </Typography>
                         <Typography variant="h6">
-                            {city.displayName ? city.displayName : city.email.split('@')[0]} visited {city.name} in {city.month} of {city.year}
+                            <Avatar src={user.userPic} />  <a href={`/users/${user.userID}`}>{user.displayName}</a> visited {city.name} in {city.month} of {city.year}
                         </Typography>
                         <Typography variant="p">
                             {city.details}
@@ -54,10 +94,10 @@ const Detail = ({ cityProps }) => {
 
                     </Grid>
                     <Grid item>
-                        <UploadImage email={city.email} />
+                        <UploadImage userID={user.userID} />
                     </Grid>
-                    {/* <EditCityForm cityDetails={city} cityId={city.id} /> */}
-                </Grid>
+         
+                </Grid> */}
 
             </Container>
         </Layout>

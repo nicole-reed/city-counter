@@ -11,11 +11,11 @@ const Cities = ({ user }) => {
     const [loading, setLoading] = useState(true);
     const { currentUser } = useAuth();
 
-
+    // fetch cities by user.userID which was passed down 
     useEffect(() => {
         const cityColRef = collection(db, "cities");
 
-        const cityQuery = query(cityColRef, where("email", "==", currentUser?.email))
+        const cityQuery = query(cityColRef, where("userID", "==", user.userID))
 
         const unsubscribe = onSnapshot(cityQuery, (querySnapshot) => {
             setCities(querySnapshot.docs.map(doc => ({

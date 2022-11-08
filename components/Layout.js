@@ -1,4 +1,9 @@
 import Nav from './Nav'
+// import ConnectingAirportsIcon from '@mui/icons-material/ConnectingAirports';
+import FlightTakeoffSharpIcon from '@mui/icons-material/FlightTakeoffSharp';
+import DirectionsSubwaySharpIcon from '@mui/icons-material/DirectionsSubwaySharp';
+import DirectionsCarSharpIcon from '@mui/icons-material/DirectionsCarSharp';
+import DirectionsBoatFilledSharpIcon from '@mui/icons-material/DirectionsBoatFilledSharp';
 
 export default function Layout({ children }) {
     return (
@@ -7,7 +12,7 @@ export default function Layout({ children }) {
             <main>
                 {children}
             </main>
-            <footer> <p>Made by N.Reed</p></footer>
+            <footer> <p><FlightTakeoffSharpIcon sx={{ color: "#99c8f1" }} /> <DirectionsBoatFilledSharpIcon sx={{ color: "#99c8f1" }} /> <DirectionsCarSharpIcon sx={{ color: "#99c8f1" }} /> <DirectionsSubwaySharpIcon sx={{ color: "#99c8f1" }} /></p></footer>
         </div>
     )
 }

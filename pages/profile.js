@@ -1,4 +1,4 @@
-import { collection, onSnapshot, query, where } from "@firebase/firestore";
+import { collection, doc, getDoc, onSnapshot, query, where } from "@firebase/firestore";
 import { useEffect, useState } from "react";
 import { useAuth } from "../Auth";
 import { db, storage } from "../firebase";
@@ -22,7 +22,25 @@ export default function profile() {
     const [open, setOpen] = useState(false);
     const [alertType, setAlertType] = useState("success");
     const [alertMessage, setAlertMessage] = useState("");
-    const [city, setCity] = useState({ name: '', country: '', month: '', year: '' })
+    // const [city, setCity] = useState({ name: '', country: '', month: '', year: '' })
+    const [user, setUser] = useState({})
+    console.log('user', user)
+
+
+    useEffect(() => {
+        async function getUser() {
+            const userDocRef = doc(db, "users", currentUser.uid)
+            const docSnap = await getDoc(userDocRef)
+
+            if (docSnap.exists()) {
+                setUser(docSnap.data())
+            } else {
+                console.log('error fetching user')
+            }
+
+        }
+        getUser()
+    }, [])
 
     const showAlert = (type, msg) => {
         setAlertMessage(msg);
@@ -40,7 +58,7 @@ export default function profile() {
     useEffect(() => {
         const cityColRef = collection(db, "cities");
 
-        const cityQuery = query(cityColRef, where("email", "==", currentUser?.email))
+        const cityQuery = query(cityColRef, where("userID", "==", currentUser.uid))
 
         const unsubscribe = onSnapshot(cityQuery, (querySnapshot) => {
             setCities(querySnapshot.docs.map(doc => ({
@@ -63,7 +81,7 @@ export default function profile() {
             <CityContext.Provider value={{ showAlert }}>
                 <Container>
                     <div className="profile">
-                        <h1 className="title-sm">Hey {currentUser.displayName} </h1>
+                        <h1 className="title-sm">Hey {user.displayName} </h1>
                         <h2 className="title-xs">You have been to {cityCount == 1 ? '1 city!' : `${cityCount} cities!`}</h2>
                         {/* <img src={currentUser.photoURL} /> */}
                     </div>
@@ -72,7 +90,7 @@ export default function profile() {
 
                         <Grid item xs={6} >
 
-                            <Cities />
+                            <Cities user={user} />
 
                         </Grid>
 

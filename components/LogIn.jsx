@@ -1,7 +1,7 @@
 import GoogleIcon from "@mui/icons-material/Google";
 import EmailIcon from '@mui/icons-material/Email';
 import PlaceIcon from '@mui/icons-material/Place';
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Container, Grid, TextField } from "@mui/material";
 import styles from "../styles/Home.module.css";
 import {
     signInWithPopup,
@@ -11,6 +11,7 @@ import {
 import { auth, db, provider } from "../firebase";
 import { useState } from "react";
 import { addDoc, collection, doc, query, runTransaction, setDoc, where } from "@firebase/firestore";
+import Layout from "./Layout";
 
 export default function LogIn() {
     const [signupEmail, setSignupEmail] = useState("");
@@ -38,7 +39,7 @@ export default function LogIn() {
 
             return transaction.set(userDocRef, { displayName: user.displayName, userPic: user.photoURL, email: user.email, userID: user.uid });
         });
-        window.location.href = '/'
+        // window.location.href = '/'
     }
 
     const signUp = async () => {
@@ -76,48 +77,49 @@ export default function LogIn() {
                 loginEmail,
                 loginPassword
             );
-            window.location.href = '/'
+            // window.location.href = '/'
         } catch (error) {
             console.log(error.message);
         }
     }
 
     return (
-        <Grid
-            container
-            spacing={0}
-            direction="column"
-            alignItems="center"
-            justifyContent="center"
-            style={{ minHeight: '100vh' }}
-        >
+        <Container>
+            <div>
+                <h1 className={styles.title}>
+                    Been There <PlaceIcon sx={{ fontSize: 40 }} />
+                </h1>
 
-            <h1 className={styles.title}>
-                Been There <PlaceIcon sx={{ fontSize: 40 }} />
-            </h1>
-
-            <p className={styles.description}>
-                A Place To Track Where In The World You Have Been
+                <p className={styles.description}>
+                    A Place To Track Where In The World You Have Been
         </p>
 
-            <div>
-                <TextField fullWidth label="Email" margin="normal" onChange={e => setLoginEmail(e.target.value)} />
-                <TextField fullWidth label="Password" margin="normal" onChange={e => setLoginPassword(e.target.value)} />
-                {/* <Button onClick={signIn} variant="contained" startIcon={<EmailIcon/>} sx={{ mt: 3 }}>Sign In With Email</Button> */}
             </div>
-            <Button onClick={signIn} variant="contained" startIcon={<EmailIcon />} sx={{ mt: 3 }}>Sign In With Email</Button>
+            <div className="login">
+                <div className="login-tile">
+                    <label>Sign In With Email</label>
+                    <TextField fullWidth label="Email" margin="normal" onChange={e => setLoginEmail(e.target.value)} />
+                    <TextField fullWidth label="Password" margin="normal" onChange={e => setLoginPassword(e.target.value)} />
+                    {/* <Button onClick={signIn} variant="contained" startIcon={<EmailIcon/>} sx={{ mt: 3 }}>Sign In With Email</Button> */}
 
-            <Button variant="contained" startIcon={<GoogleIcon />} sx={{ mt: 3 }} onClick={loginWithGoogle}>
-                Sign In With Google
-        </Button>
+                    <Button onClick={signIn} variant="contained" startIcon={<EmailIcon />} sx={{ mt: 3 }}>Sign In With Email</Button>
+                </div>
+                <div className="login-tile">
+                    <label>Sign Up/In With Google</label>
+                    <Button variant="contained" startIcon={<GoogleIcon />} sx={{ mt: 3 }} onClick={loginWithGoogle}>
+                        Google
+                </Button>
+                </div>
+            </div>
 
-            <form>
-                <label>Sign Up</label>
+            <form className="login-tile">
+                <label>Sign Up With Email</label>
                 <TextField fullWidth label="Email" margin="normal" onChange={e => setSignupEmail(e.target.value)} />
                 <TextField fullWidth label="Password" margin="normal" onChange={e => setSignupPassword(e.target.value)} />
                 <Button onClick={signUp} variant="contained" startIcon={<EmailIcon />} sx={{ mt: 3 }}>Sign Up With Email</Button>
             </form>
-        </Grid>
+        </Container>
+
     )
 }
 

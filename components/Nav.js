@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -14,12 +14,31 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import PlaceIcon from '@mui/icons-material/Place'
 import { useAuth } from '../Auth';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
+import { doc, getDoc } from '@firebase/firestore';
 
 const ResponsiveAppBar = () => {
     const { currentUser } = useAuth();
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+    const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
+
+    // const [user, setUser] = useState({});
+    // console.log('user', user)
+    // useEffect(() => {
+    //     async function getUser() {
+    //         const userDocRef = doc(db, "users", currentUser.uid)
+    //         const docSnap = await getDoc(userDocRef)
+
+    //         if (docSnap.exists()) {
+    //             setUser(docSnap.data())
+    //         } else {
+    //             console.log('error fetching user')
+    //         }
+
+    //     }
+    //     getUser()
+    // }, [])
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);

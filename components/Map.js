@@ -16,7 +16,7 @@ function Map({ cities }) {
     // const [cities, setCities] = useState([]);
     const [loading, setLoading] = useState(true);
     const countries = cities.map(city => city.country)
-    console.log('countries', countries)
+    // console.log('countries', countries)
 
     const citiesWithCords = cities.map((city) => {
         return {
@@ -28,7 +28,7 @@ function Map({ cities }) {
     })
 
     const markers = citiesWithCords.filter(marker => marker.coordinates[0] !== '')
-    console.log('markers', markers)
+    // console.log('markers', markers)
 
     return (
 

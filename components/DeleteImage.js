@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -10,13 +10,14 @@ import { IconButton } from '@mui/material';
 import { storage } from "../firebase";
 import { deleteObject, ref } from '@firebase/storage';
 
-export default function DeleteImage({ cityid, url }) {
-    const [open, setOpen] = React.useState(false);
+export default function DeleteImage({ userID, cityid, url }) {
+    const [open, setOpen] = useState(false);
     const regex = /%2F(.*?)\?/
     const [, match] = url.match(regex) || []
 
+    // TODO make sure this is working because i changed how the images are named
     const deleteImage = async () => {
-        const fileName = `${cityid}/${match}`
+        const fileName = `${userID}/${cityid}`
         const deleteRef = ref(storage, `${fileName}`)
         await deleteObject(deleteRef)
         handleClose()

@@ -12,12 +12,13 @@ import LinearIndeterminate from './LinearIndeterminate';
 // change filename when uploading so that it includes the userID as well so that we can
 // organize images by user and not necessarily by cityID only
 
-function UploadImage({ email }) {
+function UploadImage({ userID }) {
     const { currentUser } = useAuth();
     const router = useRouter();
     const city = router.query;
     const [imageUpload, setImageUpload] = useState(null)
     console.log('imageUpload', imageUpload)
+    console.log('imagelist', imageList)
     const [imageList, setImageList] = useState([])
     const [loading, setLoading] = useState(true)
     const [showProgressBar, setShowProgressBar] = useState(false)
@@ -26,6 +27,7 @@ function UploadImage({ email }) {
         try {
             if (imageUpload == null) return;
             setShowProgressBar(true)
+            // TODO put uid as first part of filename and change all code accordingly
             const imageRef = ref(storage, `${city.id}/${imageUpload.name}`)
             const snapshot = await uploadBytes(imageRef, imageUpload)
             const url = await getDownloadURL(snapshot.ref)
@@ -38,16 +40,19 @@ function UploadImage({ email }) {
         }
     }
 
-    const goToImagePage = async (url) => {
-        const regex = /%2F(.*?)\?/
-        const [, match] = url.match(regex) || []
-        const fileName = `${city.id}/${match}`
-        router.push(`/images/${fileName}`)
-    }
+    // TODO make sure we are doing this correctly now
+    // const goToImagePage = async (url) => {
+    //     const regex = /%2F(.*?)\?/
+    //     const [, match] = url.match(regex) || []
+    //     // TODO make sure we are doing this right now
+    //     const fileName = `${currentUser.uid}/${city.id}/${match}`
+    //     router.push(`/images/${fileName}`)
+    // }
 
     useEffect(() => {
         async function getUrls() {
-            const imageListRef = ref(storage, `${city.id}`)
+            // TODO make sure we are doing this correctly now
+            const imageListRef = ref(storage, `${city.id}/`)
             const response = await listAll(imageListRef)
             const urls = await Promise.all(response.items.map(item => getDownloadURL(item)))
             setImageList(urls)
@@ -57,12 +62,13 @@ function UploadImage({ email }) {
     }, []);
 
 
-    if (loading) { return <Loading /> }
+    if (loading) { return <Loading type="bubbles" color="lightblue" /> }
+
     return (
         <Container>
 
             {!showProgressBar ?
-                <ImageList cols={3} gap={8}>
+                <ImageList cols={1} gap={8}>
                     {imageList.map((url) => (
 
                         <ImageListItem key={url}>
@@ -73,7 +79,7 @@ function UploadImage({ email }) {
                                 loading="lazy"
                                 onClick={() => goToImagePage(url)}
                             />
-                            {email == currentUser.email && <DeleteImage cityid={city.id} url={url} />
+                            {userID == currentUser.uid && <DeleteImage userID={currentUser.uid} cityid={city.id} url={url} />
                             }
                         </ImageListItem>
                     ))}
@@ -82,15 +88,17 @@ function UploadImage({ email }) {
                 <LinearIndeterminate color="#99c8f1" />
             }
 
-            {email === currentUser.email &&
-                <Card sx={{ boxShadow: 3, mt: 2, mb: 2 }}
-                    style={{ backgroundColor: '#fafafa' }}>
-                    <CardContent>
-                        <h2>Add a photo:</h2>
-                        <Input type="file" onChange={(event) => { setImageUpload(event.target.files[0]) }} ></Input>
-                        <Button onClick={uploadImage} style={{ color: "#99c8f1" }}>upload image</Button>
-                    </CardContent>
-                </Card>}
+            <div>
+                {userID === currentUser.uid &&
+                    <Card sx={{ boxShadow: 3, mt: 2, mb: 2 }}
+                        style={{ backgroundColor: '#fafafa' }}>
+                        <CardContent>
+                            <h2>Add a photo:</h2>
+                            <Input type="file" onChange={(event) => { setImageUpload(event.target.files[0]) }} ></Input>
+                            <Button onClick={uploadImage} style={{ color: "#99c8f1" }}>upload image</Button>
+                        </CardContent>
+                    </Card>}
+            </div>
         </Container>
     )
 }

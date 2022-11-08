@@ -1,27 +1,68 @@
-import { collection, onSnapshot, query, where } from "@firebase/firestore";
+import { collection, doc, getDoc, onSnapshot, query, where } from "@firebase/firestore";
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react";
-import { db } from "../../firebase";
+import { db, storage } from "../../firebase";
 import Map from "../../components/Map";
 import Layout from "../../components/Layout";
-import { Avatar, Card, Container, Grid, Typography } from "@mui/material";
+import { Avatar, Button, Card, Container, Grid, ImageList, ImageListItem, Typography } from "@mui/material";
+import LocationCityOutlinedIcon from '@mui/icons-material/LocationCityOutlined';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Images from "../../components/Images";
+import { getDownloadURL, listAll, ref } from "@firebase/storage";
+import Loading from "../../components/Loading";
 
 export default function UserProfile({ }) {
     const router = useRouter()
+    const [loading, setLoading] = useState(true)
     const userID = router.query.userID[0]
-    console.log('userID', userID)
+
     const [cities, setCities] = useState([])
-    console.log('cities', cities)
-    const displayName = router.query.userID[1]
+    const shortCityList = cities.slice(0, 9)
+    const [cityList, setCityList] = useState(shortCityList)
+    const [showAllCities, setShowAllCities] = useState(false)
+
+    const [user, setUser] = useState({})
+    const [imageList, setImageList] = useState([])
+    const filteredImageList = imageList.flat()
+
 
     // TODO
     // get userID from query and then get the user and all their info from db to display the things we want on the user tile
-    // const getUser = async () => {
-    // 
-    // }
+    useEffect(() => {
+        async function getUser() {
+            const userDocRef = doc(db, "users", userID)
+            const docSnap = await getDoc(userDocRef)
+
+            if (docSnap.exists()) {
+                setUser(docSnap.data())
+            } else {
+                console.log('error fetching user')
+            }
+
+        }
+        getUser()
+        setLoading(false)
+    }, [])
 
     // TODO
-    // get images with users id so we canhavea little gallery of the images that belong to this user
+    // get images with users cityIDs so we canhavea little gallery of the images that belong to this user
+
+    useEffect(() => {
+        async function getUrls() {
+            // TODO make sure we are doing this correctly now
+            const cityIDs = cities.map(city => city.id)
+            console.log('cityIds', cityIDs)
+            const imageListRefs = cityIDs.map(async (id) => {
+                const imageListRef = ref(storage, `${id}/`)
+                const response = await listAll(imageListRef)
+                const urls = await Promise.all(response.items.map(item => getDownloadURL(item)))
+                setImageList((prev) => [...prev, urls])
+            })
+        }
+        getUrls()
+    }, [cities]);
+
 
     useEffect(() => {
         const cityColRef = collection(db, "cities");
@@ -38,30 +79,79 @@ export default function UserProfile({ }) {
         return unsubscribe;
     }, [])
 
+    const goToCityPage = async (url, userID) => {
+        //maybe i wanna use this one?
+        // const reg = /(?<=o\/{1})(.*)(?=%2F)/
+        const regex = /o\/(.*?)%/
+        const [, match] = url.match(regex) || []
+        const cityID = `${match}`
+        router.push(`/cities/${cityID}`)
+    }
+
+    const toggleCityList = async () => {
+        if (showAllCities == true) {
+            setCityList(cities)
+        } else {
+            setCityList(shortCityList)
+        }
+        setShowAllCities(!showAllCities)
+    }
+
+    if (loading) return <Loading type="bubbles" color="lightblue" />;
     return (
         <Layout>
             <Container>
                 <div className='profile-items'>
                     <div className="user-tile">
-                        {/* <Avatar sx={{ width: 96, height: 96 }} src={cities[0].userPic}></Avatar> */}
-                        <Typography variant="h4" component="div">{displayName}</Typography>
-                        <Typography variant="p" component="div">{cities.length} cities visited</Typography>
+                        <Avatar sx={{ width: 150, height: 150 }} src={user.userPic}></Avatar>
+                        <Typography variant="h4" component="div">{user.displayName}</Typography>
+                        {user.aboutMe && <Typography variant="p" component="div">{user.aboutMe}</Typography>}
+                        <LocationCityOutlinedIcon sx={{ color: "#99c8f1" }} fontSize="large" />
+                        <Typography variant="p" component="div" style={{ fontWeight: "bolder" }}>{cities.length} cities visited</Typography>
+                        {showAllCities == false ?
+                            <>
+                                {shortCityList.map(city =>
+                                    <li className="user-cities-list-item" key={city.id}><a href={`/cities/${city.id}`}>{city.name}</a></li>
+                                )}
+                                {cities.length > 10 && <button className="btn" onClick={toggleCityList}><ExpandMoreIcon fontSize="small" /></button>}
 
+                            </>
+                            :
+                            <>
+                                {cities.map(city =>
+                                    <li className="user-cities-list-item" key={city.id}><a href={`/cities/${city.id}`}>{city.name}</a></li>
+                                )}
+                                <button className="btn" onClick={toggleCityList}><ExpandLessIcon fontSize="small" /></button>
+                            </>}
                     </div>
-                    {/* {cities.map(city =>
-                    <City key={city.id}
-                        id={city.id}
-                        name={city.name}
-                        country={city.country}
-                        month={city.month}
-                        year={city.year}
-                        details={city.details}
-                    />)} */}
-
-
-                    {/* <Images currentUser={userID} /> */}
                     <Map cities={cities} />
+
                 </div>
+                <ImageList cols={3} gap={8}>
+
+                    {filteredImageList.map((img) => (
+                        <ImageListItem key={img}>
+
+                            <img
+                                src={img}
+                                alt={`${img}`}
+                                loading="lazy"
+                                onClick={() => goToCityPage(img)}
+
+                            />
+                            {/* {isHovering && <ImageListItemBar
+                                sx={{
+                                    background:
+                                        'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
+                                        'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+                                }}
+                                title={img.location}
+                                position="top"
+                            />} */}
+                        </ImageListItem>
+                    ))}
+
+                </ImageList>
             </Container>
         </Layout >
     )

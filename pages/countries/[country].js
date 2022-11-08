@@ -31,7 +31,7 @@ const Country = () => {
     useEffect(() => {
         const cityColRef = collection(db, "cities");
 
-        const cityQuery = query(cityColRef, where("country", "==", country.country), where("email", "==", currentUser.email))
+        const cityQuery = query(cityColRef, where("country", "==", country.country), where("userID", "==", currentUser.uid))
 
         const unsubscribe = onSnapshot(cityQuery, (querySnapshot) => {
             setCities(querySnapshot.docs.map(doc => ({
@@ -44,7 +44,7 @@ const Country = () => {
         return unsubscribe;
     }, [])
 
-    if (loading) return <Loading />;
+    if (loading) return <Loading type="bubbles" color="lightblue" />;
     return (
         <Layout>
             <CityContext.Provider value={{ showAlert }}>

@@ -21,15 +21,16 @@ function Images() {
         setIsHovering(false)
     }
 
+    // TODO make sure this is working because now im saving images userid/cityid-filename
     const getCityDetails = async (urls) => {
         try {
             const imagesWithCityDetails = await Promise.all(urls.map(async (url) => {
-                const regex1 = /o\/(.*?)%/
+                const regex1 = /(?<=o\/{1})(.*)(?=%2F)/
                 const [, cityID] = url.match(regex1) || []
                 const docRef = doc(db, "cities", `${cityID}`)
                 const docSnap = await getDoc(docRef)
                 const city = docSnap.data()
-                console.log('city', city)
+                // console.log('city', city)
                 return {
                     url: url,
                     location: `${city.name}, ${city.country}`,
@@ -45,6 +46,7 @@ function Images() {
 
     useEffect(() => {
         async function getUrls() {
+            // TODO figure out how to get all files
             const imageListRef = ref(storage, '/')
             const response = await listAll(imageListRef)
             const folderRefs = response.prefixes
@@ -53,25 +55,26 @@ function Images() {
             for (const res of folderListResponses) {
                 imageRefs.push(...res.items)
             }
-
             const urls = await Promise.all(imageRefs.map(item => getDownloadURL(item)))
+            console.log('urls', urls)
             const deets = await getCityDetails(urls)
+            // console.log('deets', deets)
             setImageList(deets)
         }
         getUrls()
         setLoading(false)
     }, [setImageList]);
 
-    const goToImagePage = async (url) => {
+    const goToImagePage = async (url, userID) => {
         const regex1 = /o\/(.*?)%/
         const regex2 = /%2F(.*?)\?/
         const [, match1] = url.match(regex1) || []
         const [, match2] = url.match(regex2) || []
         const fileName = `${match1}/${match2}`
-        router.push(`/images/${fileName}`)
+        router.push(`/images/${fileName}/${userID}`)
     }
 
-    if (loading) return <Loading />
+    if (loading) return <Loading type="bubbles" color="lightblue" />
     if (imageList.length > 0) {
         return (
             <Container>
@@ -82,10 +85,9 @@ function Images() {
 
                             <img
                                 src={img.url}
-                                // srcSet={`${url}?w=248&fit=crop&auto=format&dpr=2 2x`}
                                 alt={`${img.url}`}
                                 loading="lazy"
-                                onClick={() => goToImagePage(img.url)}
+                                onClick={() => goToImagePage(img.url, img.user)}
                                 onMouseOver={handleMouseOver}
                                 onMouseOut={handleMouseOut}
 

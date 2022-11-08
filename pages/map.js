@@ -60,7 +60,6 @@ function Map() {
                 justifyContent: "center",
                 alignItems: "center",
             }}>
-                {/* <Nav /> */}
                 <h1 className="map-title">My Cities</h1>
                 <ReactTooltip>{content}</ReactTooltip>
                 <div style={{ width: "80%" }}>
@@ -74,6 +73,9 @@ function Map() {
                                             key={geo.rsmKey}
                                             geography={geo}
                                             fill={countries.includes(geo.properties.name) ? "#99c8f1" : "black"}
+                                            stroke="#ffffff"
+                                            strokeWidth="0.05"
+                                            outline="none"
                                             onMouseEnter={() => {
                                                 const { name } = geo.properties;
                                                 setContent(`${name}`)
