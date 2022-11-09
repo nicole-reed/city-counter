@@ -20,8 +20,6 @@ export default function LogIn() {
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
 
-
-
     const loginWithGoogle = async () => {
         const { user } = await signInWithPopup(auth, provider)
         console.log('user', user)
@@ -84,41 +82,48 @@ export default function LogIn() {
     }
 
     return (
-        <Container>
-            <div>
-                <h1 className={styles.title}>
-                    Been There <PlaceIcon sx={{ fontSize: 40 }} />
-                </h1>
+        <Layout>
 
-                <p className={styles.description}>
-                    A Place To Track Where In The World You Have Been
-        </p>
+            <div className="landing">
+                {/* <div className="sect-1">
+                    <h1>Welcome to Been There</h1>
+                    <p>A place where we can easily keep track of all the cities we have traveled to.</p>
+                </div> */}
+                <div className="sect-a">
+                    <div className="overlay">
+                        <div className="sect-a-inner">
+                            <h2>Where in the world will you go?</h2>
 
-            </div>
-            <div className="login">
-                <div className="login-tile">
-                    <label>Sign In With Email</label>
-                    <TextField fullWidth label="Email" margin="normal" onChange={e => setLoginEmail(e.target.value)} />
-                    <TextField fullWidth label="Password" margin="normal" onChange={e => setLoginPassword(e.target.value)} />
-                    {/* <Button onClick={signIn} variant="contained" startIcon={<EmailIcon/>} sx={{ mt: 3 }}>Sign In With Email</Button> */}
-
-                    <Button onClick={signIn} variant="contained" startIcon={<EmailIcon />} sx={{ mt: 3 }}>Sign In With Email</Button>
+                        </div>
+                    </div>
                 </div>
-                <div className="login-tile">
-                    <label>Sign Up/In With Google</label>
-                    <Button variant="contained" startIcon={<GoogleIcon />} sx={{ mt: 3 }} onClick={loginWithGoogle}>
-                        Google
-                </Button>
+                <div className="sect-b">
+                    <div className="login">
+                        <div className="login-tile">
+                            <label>Sign In With Email</label>
+                            <TextField fullWidth label="Email" margin="normal" onChange={e => setLoginEmail(e.target.value)} />
+                            <TextField fullWidth label="Password" margin="normal" onChange={e => setLoginPassword(e.target.value)} />
+                            {/* <Button onClick={signIn} variant="contained" startIcon={<EmailIcon/>} sx={{ mt: 3 }}>Sign In With Email</Button> */}
+
+                            <Button onClick={signIn} variant="contained" startIcon={<EmailIcon />} sx={{ mt: 3 }} style={{ backgroundColor: "#99c8f1" }}>Sign In With Email</Button>
+                        </div>
+                        <div className="login-tile">
+                            <label>Sign Up/In With Google</label>
+                            <Button variant="contained" startIcon={<GoogleIcon />} sx={{ mt: 3 }} style={{ backgroundColor: "#99c8f1" }} onClick={loginWithGoogle}>Google</Button>
+                        </div>
+
+
+                        <form className="login-tile">
+                            <label>Sign Up With Email</label>
+                            <TextField fullWidth label="Email" margin="normal" onChange={e => setSignupEmail(e.target.value)} />
+                            <TextField fullWidth label="Password" margin="normal" onChange={e => setSignupPassword(e.target.value)} />
+                            <Button onClick={signUp} variant="contained" startIcon={<EmailIcon />} sx={{ mt: 3 }} style={{ backgroundColor: "#99c8f1" }} >Sign Up With Email</Button>
+                        </form>
+                    </div>
                 </div>
             </div>
 
-            <form className="login-tile">
-                <label>Sign Up With Email</label>
-                <TextField fullWidth label="Email" margin="normal" onChange={e => setSignupEmail(e.target.value)} />
-                <TextField fullWidth label="Password" margin="normal" onChange={e => setSignupPassword(e.target.value)} />
-                <Button onClick={signUp} variant="contained" startIcon={<EmailIcon />} sx={{ mt: 3 }}>Sign Up With Email</Button>
-            </form>
-        </Container>
+        </Layout>
 
     )
 }

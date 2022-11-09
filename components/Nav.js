@@ -23,23 +23,6 @@ const ResponsiveAppBar = () => {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
 
-    // const [user, setUser] = useState({});
-    // console.log('user', user)
-    // useEffect(() => {
-    //     async function getUser() {
-    //         const userDocRef = doc(db, "users", currentUser.uid)
-    //         const docSnap = await getDoc(userDocRef)
-
-    //         if (docSnap.exists()) {
-    //             setUser(docSnap.data())
-    //         } else {
-    //             console.log('error fetching user')
-    //         }
-
-    //     }
-    //     getUser()
-    // }, [])
-
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -54,6 +37,58 @@ const ResponsiveAppBar = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    if (!currentUser) {
+        return (
+            <AppBar position="static" sx={{ backgroundColor: "#99c8f1", fontFamily: "sans-serif", fontWeight: 500 }}>
+                <Container maxWidth="xl">
+                    <Toolbar disableGutters>
+                        <PlaceIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="a"
+                            href="/"
+                            sx={{
+                                mr: 2,
+                                display: { xs: 'none', md: 'flex' },
+                                fontFamily: 'sans-serif',
+                                fontWeight: 400,
+                                letterSpacing: '.3rem',
+                                color: 'inherit',
+                                textDecoration: 'none',
+
+                            }}
+                        >
+                            Been There
+          </Typography>
+
+
+                        <PlaceIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                        <Typography
+                            variant="h5"
+                            noWrap
+                            component="a"
+                            href="/"
+                            sx={{
+                                mr: 2,
+                                display: { xs: 'flex', md: 'none' },
+                                flexGrow: 1,
+                                fontFamily: 'sans-serif',
+                                fontWeight: 400,
+                                letterSpacing: '.1rem',
+                                color: 'inherit',
+                                textDecoration: 'none',
+                            }}
+                        >
+                            Been There
+          </Typography>
+
+                    </Toolbar>
+                </Container>
+            </AppBar>
+        );
+    }
 
     return (
         <AppBar position="static" sx={{ backgroundColor: "#99c8f1", fontFamily: "sans-serif", fontWeight: 500 }}>
@@ -112,7 +147,10 @@ const ResponsiveAppBar = () => {
                                 <Link className='nav-item' href="/map">Map</Link>
                             </MenuItem>
                             <MenuItem>
-                                <Link className='nav-item' href="/profile">Profile</Link>
+                                <Link className='nav-item' href={`/users/${currentUser.uid}`}>Profile</Link>
+                            </MenuItem>
+                            <MenuItem>
+                                <Link className='nav-item' href="/citylist">My Cities</Link>
                             </MenuItem>
                             <MenuItem>
                                 <Link className='nav-item' href="/">Home</Link>
@@ -145,7 +183,10 @@ const ResponsiveAppBar = () => {
                             <Link href="/map">Map</Link>
                         </MenuItem>
                         <MenuItem>
-                            <Link href="/profile">Profile</Link>
+                            <Link className='nav-item' href={`/users/${currentUser.uid}`}>Profile</Link>
+                        </MenuItem>
+                        <MenuItem>
+                            <Link className='nav-item' href="/citylist">My Cities</Link>
                         </MenuItem>
                     </Box>
 

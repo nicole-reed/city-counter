@@ -110,48 +110,7 @@ function Images() {
     }
     return (
         <Container>
-            {/* <ImageList cols={3} gap={8}>
 
-                {imageList.map((img) => (
-                    <ImageListItem key={img.url}>
-                        <img
-                            src={img.url}
-                            // srcSet={`${url}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                            alt={`${img.url}`}
-                            loading="lazy"
-                            onClick={() => goToImagePage(img.url)}
-                            onMouseOver={handleMouseOver}
-                            onMouseOut={handleMouseOut}
-
-                        />
-                        {isHovering && <ImageListItemBar
-                            sx={{
-                                background:
-                                    'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
-                                    'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-                            }}
-                            title={img.location}
-                            position="top"
-                        />}
-                    </ImageListItem>
-                ))} */}
-
-            {/* {urls.map((img) => (
-                    <ImageListItem key={img}>
-                        <img
-                            src={img}
-                            // srcSet={`${url}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                            alt={`${img}`}
-                            loading="lazy"
-                        // onClick={() => goToImagePage(img)}
-                        // onMouseOver={handleMouseOver}
-                        // onMouseOut={handleMouseOut}
-
-                        />
-                    </ImageListItem>
-                ))} */}
-
-            {/* </ImageList> */}
         </Container>
     )
 

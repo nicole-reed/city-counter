@@ -16,6 +16,7 @@ export default function profile() {
     const [newDisplayName, setNewDisplayName] = useState('')
     const [user, setUser] = useState({});
     console.log('user', user)
+    console.log('imageUpload', imageUpload)
 
 
     // TODO
@@ -68,13 +69,13 @@ export default function profile() {
     const uploadImage = async () => {
         try {
             if (imageUpload == null) return;
-            setShowProgressBar(true)
+            // setShowProgressBar(true)
             const imageRef = ref(storage, `/userPics/${currentUser.uid}/${imageUpload.name}`)
             const snapshot = await uploadBytes(imageRef, imageUpload)
             const url = await getDownloadURL(snapshot.ref)
             await updateProfile(currentUser, { photoURL: url })
             await updateUserPic(url)
-            setShowProgressBar(false)
+            // setShowProgressBar(false)
             location.reload();
             console.log('profile pic set')
         } catch (error) {

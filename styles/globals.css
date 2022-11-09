@@ -186,17 +186,16 @@ footer {
   font-weight: lighter; 
 }
 
-.login{
+.login {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
 }
 
 .login-tile {
   display: flex;
   height: max-content;
-  width: 40%;
+  width: 80%;
   flex-direction: column;
   border-radius: 10px;
   background-color: white;
@@ -270,6 +269,59 @@ form label {
   /* box-shadow: 0px 2px 9px 5px rgba(0,0,0,0.05); */
   margin-top: .5rem;
 }
+
+.landing {
+  display: flex;
+  flex-direction: column;
+}
+
+.sect-a {
+  position: relative;
+  background: url('../public/city-imgs/desert.jpg') no-repeat bottom center/cover;
+  height: 675px;
+
+}
+
+.sect-a-inner {
+  color: #fff;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  text-align: center;
+  margin: auto;
+  max-width: 860px;
+  padding: 5rem 0;
+}
+
+.sect-a-inner h2 {
+  font-size: 1.5rem;
+  font-weight: 300;
+  padding: 1rem
+}
+
+/* i dont think we need this */
+.overlay {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--overlay-color);
+}
+
+.sect-b{
+  /* background: rgb(255,255,255);
+  background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(177,210,231,1) 83%); */
+background: rgb(142,105,71);
+background: linear-gradient(180deg, rgba(142,105,71,1) 0%, rgba(255,255,255,1) 83%);
+}
+
+.sect-b p {
+  margin: auto;
+}
+
 
 @media only screen and (max-width: 600px) {
   .profile-items {

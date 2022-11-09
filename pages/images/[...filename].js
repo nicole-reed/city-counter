@@ -73,9 +73,10 @@ export default function Image() {
                     <p><a href={`/users/${user.userID}`}>{user.displayName}</a></p>
                 </div>
                 <ImageList cols={1} gap={8}>
-                    <ImageListItem >
-                        <img src={image}>
+                    <ImageListItem className="parent">
+                        <img className="full-img" src={image}>
                         </img>
+
                     </ImageListItem>
                 </ImageList>
             </Container>

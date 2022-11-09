@@ -52,52 +52,9 @@ const Detail = ({ cityProps }) => {
                         {city.details && <Typography variant="h6" component="div">"{city.details}"</Typography>}
 
                     </div>
-                    <UploadImage userID={user.userID} />
+                    {/* <UploadImage userID={user.userID} mt={3} /> */}
                 </div>
-
-                {/* 
-                <Grid
-                    container
-                    spacing={0}
-                    direction="column"
-                    alignItems="center"
-                    justifyContent="center"
-                    style={{ minHeight: '100vh', maxWidth: "80%", margin: "auto" }}
-                >
-                    <Grid item>
-                        <Grid
-                            container
-                            spacing={0}
-                            direction="row"
-                            alignItems="center"
-                            justifyContent="space-between"
-                        >
-                            <Typography variant="h2" component="div">
-                                {city.name}
-                            </Typography>
-                            {city.userID == currentUser.uid &&
-                                <IconButton onClick={() => router.push(`/edit/${currentCity.id}`)}>
-                                    <ModeEditIcon style={{ color: "#99c8f1" }} />
-                                </IconButton>
-                            }
-                        </Grid>
-
-                        <Typography variant="h5" className="country-title" onClick={() => router.push(`/countries/${city.country}`)}>
-                            {city.country}
-                        </Typography>
-                        <Typography variant="h6">
-                            <Avatar src={user.userPic} />  <a href={`/users/${user.userID}`}>{user.displayName}</a> visited {city.name} in {city.month} of {city.year}
-                        </Typography>
-                        <Typography variant="p">
-                            {city.details}
-                        </Typography>
-
-                    </Grid>
-                    <Grid item>
-                        <UploadImage userID={user.userID} />
-                    </Grid>
-         
-                </Grid> */}
+                <UploadImage userID={user.userID} mt={3} />
 
             </Container>
         </Layout>
