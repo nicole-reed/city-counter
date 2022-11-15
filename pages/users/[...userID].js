@@ -4,31 +4,29 @@ import { useEffect, useState } from "react";
 import { db, storage } from "../../firebase";
 import Map from "../../components/Map";
 import Layout from "../../components/Layout";
-import { Avatar, Button, Card, Container, Grid, ImageList, ImageListItem, Typography } from "@mui/material";
+import { Avatar, Container, ImageList, ImageListItem, Typography } from "@mui/material";
 import LocationCityOutlinedIcon from '@mui/icons-material/LocationCityOutlined';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Images from "../../components/Images";
 import { getDownloadURL, listAll, ref } from "@firebase/storage";
 import Loading from "../../components/Loading";
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export default function UserProfile({ }) {
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.up('sm'));
     const router = useRouter()
     const [loading, setLoading] = useState(true)
     const userID = router.query.userID[0]
-
     const [cities, setCities] = useState([])
     const shortCityList = cities.slice(0, 9)
     const [cityList, setCityList] = useState(shortCityList)
     const [showAllCities, setShowAllCities] = useState(false)
-
     const [user, setUser] = useState({})
     const [imageList, setImageList] = useState([])
     const filteredImageList = imageList.flat()
 
-
-    // TODO
-    // get userID from query and then get the user and all their info from db to display the things we want on the user tile
     useEffect(() => {
         async function getUser() {
             const userDocRef = doc(db, "users", userID)
@@ -39,20 +37,14 @@ export default function UserProfile({ }) {
             } else {
                 console.log('error fetching user')
             }
-
         }
         getUser()
         setLoading(false)
     }, [])
 
-    // TODO
-    // get images with users cityIDs so we canhavea little gallery of the images that belong to this user
-
     useEffect(() => {
         async function getUrls() {
-            // TODO make sure we are doing this correctly now
             const cityIDs = cities.map(city => city.id)
-            console.log('cityIds', cityIDs)
             const imageListRefs = cityIDs.map(async (id) => {
                 const imageListRef = ref(storage, `${id}/`)
                 const response = await listAll(imageListRef)
@@ -80,8 +72,6 @@ export default function UserProfile({ }) {
     }, [])
 
     const goToCityPage = async (url, userID) => {
-        //maybe i wanna use this one?
-        // const reg = /(?<=o\/{1})(.*)(?=%2F)/
         const regex = /o\/(.*?)%/
         const [, match] = url.match(regex) || []
         const cityID = `${match}`
@@ -127,30 +117,18 @@ export default function UserProfile({ }) {
                     <Map cities={cities} />
 
                 </div>
-                <ImageList cols={3} gap={8}>
+                <ImageList cols={matches ? 3 : 1} gap={8}>
 
                     {filteredImageList.map((img) => (
                         <ImageListItem key={img}>
-
                             <img
                                 src={img}
                                 alt={`${img}`}
                                 loading="lazy"
                                 onClick={() => goToCityPage(img)}
-
                             />
-                            {/* {isHovering && <ImageListItemBar
-                                sx={{
-                                    background:
-                                        'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
-                                        'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-                                }}
-                                title={img.location}
-                                position="top"
-                            />} */}
                         </ImageListItem>
                     ))}
-
                 </ImageList>
             </Container>
         </Layout >

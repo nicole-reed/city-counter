@@ -1,5 +1,5 @@
 import { collection, doc, getDoc, getDocs } from "@firebase/firestore"
-import { Grid, Typography, Container, Box, IconButton, Avatar, Tooltip } from "@mui/material"
+import { Typography, Container, Box, IconButton, Avatar } from "@mui/material"
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import UploadImage from "../../components/UploadImage"
 import { db } from "../../firebase"
@@ -8,10 +8,13 @@ import { useRouter } from "next/router"
 import { useAuth } from "../../Auth";
 import { useEffect, useState } from "react";
 import Loading from "../../components/Loading";
+import Map from "../../components/Map";
 
 const Detail = ({ cityProps }) => {
     const { currentUser } = useAuth();
     const city = JSON.parse(cityProps)
+    const cityArr = [city]
+    console.log('cityArr', cityArr)
     const router = useRouter();
     const currentCity = router.query
     const [user, setUser] = useState({})
@@ -44,15 +47,15 @@ const Detail = ({ cityProps }) => {
                                 <ModeEditIcon style={{ color: "#99c8f1" }} />
                             </IconButton>
                         }
-                        <Avatar sx={{ width: 96, height: 96 }} src={user.userPic}></Avatar>
-                        <Typography variant="p" component="div"><a href={`/users/${user.userID}`}>{user.displayName}</a></Typography>
                         <Typography variant="h4" component="div">{city.name}</Typography>
-                        <Typography variant="p" component="div">{city.country}</Typography>
+                        <Typography variant="p" component="div"><a href={`/countries/${city.country}`}>{city.country}</a></Typography>
                         <Typography variant="p" component="div">{city.month} {city.year}</Typography>
                         {city.details && <Typography variant="h6" component="div">"{city.details}"</Typography>}
+                        <Avatar sx={{ width: 96, height: 96 }} src={user.userPic}></Avatar>
+                        <Typography variant="p" component="div"><a href={`/users/${user.userID}`}>{user.displayName}</a></Typography>
 
                     </div>
-                    {/* <UploadImage userID={user.userID} mt={3} /> */}
+                    <Map cities={cityArr} />
                 </div>
                 <UploadImage userID={user.userID} mt={3} />
 

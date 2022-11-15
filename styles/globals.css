@@ -13,6 +13,10 @@ ul {
 .profile {
   margin-bottom: 3rem;
 }
+.profile-img-cont{
+display: flex;
+justify-content: center;
+}
 
 .profile-img {
   max-width: 80%;
@@ -77,14 +81,6 @@ h1, h2, p {
   font-size: 2rem;
 }
 
-/* .grid {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  max-width: 800px;
-} */
-
 .card {
   margin: 1rem;
   padding: .75rem;
@@ -97,7 +93,6 @@ h1, h2, p {
   transition: color 0.15s ease, border-color 0.15s ease;
   max-width: 300px;
 }
-
 
 footer {
   display: flex;
@@ -128,6 +123,7 @@ footer {
 }
 
 .pic-info {
+  margin: auto;
   display: flex;
   flex-direction: row;
 }
@@ -136,9 +132,21 @@ footer {
   padding-left: 3px;
 }
 
+.MuiCardHeader-title {
+  font-weight: lighter;
+  font-family: inherit;
+}
+
+.MuiCardHeader-subheader {
+  font-weight: lighter;
+  font-family: inherit;
+}
+
+
 .about-me {
   margin: 1rem;
-  padding: .75rem;
+  padding: .25rem;
+  font-weight: lighter;
   text-align: left;
   color: inherit;
   text-decoration: none;
@@ -146,6 +154,10 @@ footer {
   box-shadow: 0px 2px 9px 5px rgba(0,0,0,0.05);
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.about-me h2 {
+    text-align: center;
 }
 
 
@@ -167,7 +179,6 @@ footer {
 
 .user-cities-list-item {
   list-style: none;
-  /* color:#ffffff */
 }
 
 .user-tile {
@@ -190,6 +201,8 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 60%;
+  margin: auto;
 }
 
 .login-tile {
@@ -199,18 +212,14 @@ footer {
   flex-direction: column;
   border-radius: 10px;
   background-color: white;
+  font-weight: lighter;
   justify-content: flex-start;
   align-items: flex-start;
   padding: 1.5rem;
   box-shadow: 0px 2px 9px 5px rgba(0,0,0,0.05);
   margin: 1rem;
   border: 1px solid #eaeaea;
-  /* font-weight: lighter; */
 }
-
-/* img {
-  border-radius: 10px;;
-} */
 
 form {
   margin: 1rem;
@@ -266,7 +275,6 @@ form label {
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  /* box-shadow: 0px 2px 9px 5px rgba(0,0,0,0.05); */
   margin-top: .5rem;
 }
 
@@ -288,7 +296,6 @@ form label {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
   text-align: center;
   margin: auto;
   max-width: 860px;
@@ -312,16 +319,20 @@ form label {
 }
 
 .sect-b{
-  /* background: rgb(255,255,255);
-  background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(177,210,231,1) 83%); */
-background: rgb(142,105,71);
-background: linear-gradient(180deg, rgba(142,105,71,1) 0%, rgba(255,255,255,1) 83%);
+/* background: rgb(142,105,71);
+background: linear-gradient(180deg, rgba(142,105,71,1) 0%, rgba(255,255,255,1) 83%); */
+background: rgb(163,128,97);
+background: linear-gradient(180deg, rgba(163,128,97,1) 0%, rgba(255,255,255,1) 83%);
 }
 
 .sect-b p {
   margin: auto;
 }
 
+.full-img {
+  max-width: 60%;
+  margin: auto;
+}
 
 @media only screen and (max-width: 600px) {
   .profile-items {
@@ -329,5 +340,21 @@ background: linear-gradient(180deg, rgba(142,105,71,1) 0%, rgba(255,255,255,1) 8
   }
   .user-tile{
     width: 90%
+  }
+
+  .login {
+    max-width: 100%;
+  }
+
+  .full-img {
+    max-width: 90%;
+  }
+
+  .title-sm {
+    font-size: 2rem;
+  }
+
+  .about-me {
+    font-size: .75rem;
   }
 }

@@ -15,7 +15,6 @@ export default function DeleteImage({ userID, cityid, url }) {
     const regex = /%2F(.*?)\?/
     const [, match] = url.match(regex) || []
 
-    // TODO make sure this is working because i changed how the images are named
     const deleteImage = async () => {
         const fileName = `${userID}/${cityid}`
         const deleteRef = ref(storage, `${fileName}`)
@@ -34,7 +33,7 @@ export default function DeleteImage({ userID, cityid, url }) {
     };
 
     return (
-        <div>
+        <div className="full-img">
             <IconButton style={{ color: "#99c8f1" }} variant="outlined" onClick={handleClickOpen}>
                 <DeleteIcon />
             </IconButton>

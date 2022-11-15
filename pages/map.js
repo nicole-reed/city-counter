@@ -29,7 +29,6 @@ function Map() {
     })
 
     const markers = citiesWithCords.filter(marker => marker.coordinates[0] !== '')
-    console.log('markers', markers)
 
     useEffect(() => {
         const cityColRef = collection(db, "cities");
@@ -60,7 +59,6 @@ function Map() {
                 justifyContent: "center",
                 alignItems: "center",
             }}>
-                <h1 className="map-title">My Cities</h1>
                 <ReactTooltip>{content}</ReactTooltip>
                 <div style={{ width: "80%" }}>
                     <ComposableMap data-tip="">
@@ -110,9 +108,6 @@ function Map() {
                                                 outline: "none",
                                             }
                                         }} />
-                                    {/* <text textAnchor="middle" y={markerOffset} style={{ fontFamily: "system-ui", fontSize: "5px", fill: "#5D5A6D" }}>
-                                    {name}
-                                </text> */}
                                 </Marker>
                             ))}
                         </ZoomableGroup>

@@ -8,17 +8,11 @@ import Loading from './Loading';
 import DeleteImage from './DeleteImage';
 import LinearIndeterminate from './LinearIndeterminate';
 
-// TODO
-// change filename when uploading so that it includes the userID as well so that we can
-// organize images by user and not necessarily by cityID only
-
 function UploadImage({ userID }) {
     const { currentUser } = useAuth();
     const router = useRouter();
     const city = router.query;
     const [imageUpload, setImageUpload] = useState(null)
-    console.log('imageUpload', imageUpload)
-    console.log('imagelist', imageList)
     const [imageList, setImageList] = useState([])
     const [loading, setLoading] = useState(true)
     const [showProgressBar, setShowProgressBar] = useState(false)
@@ -27,11 +21,9 @@ function UploadImage({ userID }) {
         try {
             if (imageUpload == null) return;
             setShowProgressBar(true)
-            // TODO put uid as first part of filename and change all code accordingly
             const imageRef = ref(storage, `${city.id}/${imageUpload.name}`)
             const snapshot = await uploadBytes(imageRef, imageUpload)
             const url = await getDownloadURL(snapshot.ref)
-            console.log('url', url)
 
             setImageList((prev) => [...prev, url])
             setShowProgressBar(false)
@@ -40,18 +32,8 @@ function UploadImage({ userID }) {
         }
     }
 
-    // TODO make sure we are doing this correctly now
-    // const goToImagePage = async (url) => {
-    //     const regex = /%2F(.*?)\?/
-    //     const [, match] = url.match(regex) || []
-    //     // TODO make sure we are doing this right now
-    //     const fileName = `${currentUser.uid}/${city.id}/${match}`
-    //     router.push(`/images/${fileName}`)
-    // }
-
     useEffect(() => {
         async function getUrls() {
-            // TODO make sure we are doing this correctly now
             const imageListRef = ref(storage, `${city.id}/`)
             const response = await listAll(imageListRef)
             const urls = await Promise.all(response.items.map(item => getDownloadURL(item)))
@@ -73,11 +55,10 @@ function UploadImage({ userID }) {
 
                         <ImageListItem key={url}>
                             <img
+                                className="full-img"
                                 src={url}
-                                // srcSet={`${url}?w=248&fit=crop&auto=format&dpr=2 2x`}
                                 alt={`${url}`}
                                 loading="lazy"
-                                onClick={() => goToImagePage(url)}
                             />
                             {userID == currentUser.uid && <DeleteImage userID={currentUser.uid} cityid={city.id} url={url} />
                             }

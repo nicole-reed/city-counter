@@ -10,19 +10,13 @@ import { db, storage } from "../../firebase"
 export default function Image() {
     const router = useRouter()
     const fileName = router.query.filename
-    console.log('filename', fileName)
     const cityID = fileName[0]
     const file = fileName[1]
     const userID = fileName[2]
     const [image, setImage] = useState([])
     const [loading, setLoading] = useState(true)
     const [city, setCity] = useState({})
-    console.log(city.userPic)
     const [user, setUser] = useState({})
-    console.log('user', user)
-
-    // TODO
-    // getUser() from id in path to fetch that user's pic to user for the avatar
 
     useEffect(() => {
         async function getUser() {
@@ -34,7 +28,6 @@ export default function Image() {
             } else {
                 console.log('error fetching user')
             }
-
         }
         getUser()
     }, [city])
@@ -53,7 +46,6 @@ export default function Image() {
 
     useEffect(() => {
         async function getImage() {
-            // const pathRef = ref(storage, `${userID}/${cityID}/${file}`)
             const pathRef = ref(storage, `${cityID}/${file}`)
 
             const url = await getDownloadURL(pathRef)
@@ -67,17 +59,18 @@ export default function Image() {
     return (
         <Layout>
             <Container>
-                <h2><a href={`/cities/${cityID}`}>{city.name}</a>, <a href={`/countries/${city.country}`}>{city.country}</a></h2>
-                <div className='pic-info'>
-                    <Avatar src={user.userPic}></Avatar>
-                    <p><a href={`/users/${user.userID}`}>{user.displayName}</a></p>
-                </div>
+
                 <ImageList cols={1} gap={8}>
                     <ImageListItem className="parent">
                         <img className="full-img" src={image}>
                         </img>
 
                     </ImageListItem>
+                    <h2 style={{ margin: "auto" }}><a href={`/cities/${cityID}`}>{city.name}</a>, <a href={`/countries/${city.country}`}>{city.country}</a></h2>
+                    <div className='pic-info'>
+                        <Avatar src={user.userPic}></Avatar>
+                        <p><a href={`/users/${user.userID}`}>{user.displayName}</a></p>
+                    </div>
                 </ImageList>
             </Container>
         </Layout>

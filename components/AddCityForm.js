@@ -9,10 +9,9 @@ import axios from "axios"
 const AddCityForm = ({ currentCountry }) => {
     const inputAreaRef = useRef();
     const { currentUser } = useAuth();
-    console.log('currentUser', currentUser)
     const { showAlert } = useContext(CityContext)
     const [city, setCity] = useState({ name: '', country: currentCountry || '', month: '', year: '' })
-    console.log('city', city)
+
     const countryList = [
         "Abkhazia",
         "Afghanistan",
@@ -271,7 +270,6 @@ const AddCityForm = ({ currentCountry }) => {
         try {
             const searchCity = `${city.name},${city.country}`
             const response = await axios.get(`https://us1.locationiq.com/v1/search?key=${process.env.NEXT_PUBLIC_GEO_API_KEY}&q=${searchCity}&format=json`)
-            console.log('response', response.data)
             const longitude = response.data[0].lon
             const latitude = response.data[0].lat
             return { longitude, latitude }
@@ -300,7 +298,6 @@ const AddCityForm = ({ currentCountry }) => {
     useEffect(() => {
         const checkIfClickedOutside = e => {
             if (!inputAreaRef.current.contains(e.target)) {
-                console.log('outside input area');
                 setCity({ name: '', country: '', month: '', year: '', details: '' })
             } else {
                 console.log('inside input area')

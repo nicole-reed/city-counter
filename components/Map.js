@@ -1,22 +1,13 @@
 import ReactTooltip from "react-tooltip";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from "react-simple-maps";
-import { db } from "../firebase";
-import { collection, onSnapshot, query, where } from "@firebase/firestore";
-import Loading from "../components/Loading";
 import { useRouter } from "next/router";
-import Layout from "../components/Layout";
 
 function Map({ cities }) {
     const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json";
     const router = useRouter()
     const [content, setContent] = useState("");
-    // const currentUser = user;
-    // console.log('curentUser', currentUser)
-    // const [cities, setCities] = useState([]);
-    const [loading, setLoading] = useState(true);
     const countries = cities.map(city => city.country)
-    // console.log('countries', countries)
 
     const citiesWithCords = cities.map((city) => {
         return {
@@ -28,10 +19,8 @@ function Map({ cities }) {
     })
 
     const markers = citiesWithCords.filter(marker => marker.coordinates[0] !== '')
-    // console.log('markers', markers)
 
     return (
-
         <div className='map' style={{
             width: "100%",
             height: "100%",
@@ -86,17 +75,12 @@ function Map({ cities }) {
                                             outline: "none",
                                         }
                                     }} />
-                                {/* <text textAnchor="middle" y={markerOffset} style={{ fontFamily: "system-ui", fontSize: "5px", fill: "#5D5A6D" }}>
-                                    {name}
-                                </text> */}
                             </Marker>
                         ))}
                     </ZoomableGroup>
                 </ComposableMap>
             </div>
         </div>
-
-
     )
 }
 

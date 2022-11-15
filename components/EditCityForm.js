@@ -11,7 +11,6 @@ const EditCityForm = ({ cityDetails }) => {
     const cityID = router.query;
     const inputAreaRef = useRef();
     const [city, setCity] = useState({ name: cityDetails.name, country: cityDetails.country, month: cityDetails.month, year: cityDetails.year, details: cityDetails.details ? cityDetails.details : '' })
-    console.log('city', city)
 
     const onSubmit = async () => {
         // update city
@@ -22,20 +21,6 @@ const EditCityForm = ({ cityDetails }) => {
         router.push(`/cities/${cityID.id}`)
     }
 
-    // useEffect(() => {
-    //     const checkIfClickedOutside = e => {
-    //         if (!inputAreaRef.current.contains(e.target)) {
-    //             console.log('outside input area');
-    //             setCity({ name: '', country: '', month: '', year: '', details: '' })
-    //         } else {
-    //             console.log('inside input area')
-    //         }
-    //     }
-    //     document.addEventListener("mousedown", checkIfClickedOutside)
-    //     return () => {
-    //         document.removeEventListener("mousedown", checkIfClickedOutside)
-    //     }
-    // }, [])
     return (
         <Container maxWidth="sm">
             <div className="edit-city-form" ref={inputAreaRef}>

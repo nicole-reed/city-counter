@@ -9,13 +9,11 @@ import { useRouter } from "next/router"
 const Detail = ({ cityProps }) => {
     const city = JSON.parse(cityProps)
     const router = useRouter();
-    console.log('cityProps', cityProps)
 
     return (
         <Layout>
             <Container>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }} mt={3}>
-
                 </Box>
 
                 <EditCityForm cityDetails={city} cityId={city.id} />

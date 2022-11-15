@@ -1,5 +1,4 @@
 import Nav from './Nav'
-// import ConnectingAirportsIcon from '@mui/icons-material/ConnectingAirports';
 import FlightTakeoffSharpIcon from '@mui/icons-material/FlightTakeoffSharp';
 import DirectionsSubwaySharpIcon from '@mui/icons-material/DirectionsSubwaySharp';
 import DirectionsCarSharpIcon from '@mui/icons-material/DirectionsCarSharp';

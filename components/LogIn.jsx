@@ -1,8 +1,6 @@
 import GoogleIcon from "@mui/icons-material/Google";
 import EmailIcon from '@mui/icons-material/Email';
-import PlaceIcon from '@mui/icons-material/Place';
-import { Button, Container, Grid, TextField } from "@mui/material";
-import styles from "../styles/Home.module.css";
+import { Button, TextField } from "@mui/material";
 import {
     signInWithPopup,
     createUserWithEmailAndPassword,
@@ -10,26 +8,23 @@ import {
 } from "@firebase/auth";
 import { auth, db, provider } from "../firebase";
 import { useState } from "react";
-import { addDoc, collection, doc, query, runTransaction, setDoc, where } from "@firebase/firestore";
+import { doc, runTransaction } from "@firebase/firestore";
 import Layout from "./Layout";
 
 export default function LogIn() {
     const [signupEmail, setSignupEmail] = useState("");
     const [signupPassword, setSignupPassword] = useState("");
-    const [user, setUser] = useState({});
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
 
     const loginWithGoogle = async () => {
         const { user } = await signInWithPopup(auth, provider)
-        console.log('user', user)
         const userDocRef = doc(db, "users", user.uid);
 
         // make sure user doesnt already exist before saving to users collection
         await runTransaction(db, async (transaction) => {
 
             const existingUser = await transaction.get(userDocRef);
-            console.log('existing user', existingUser)
 
             if (existingUser.exists()) {
                 return;
@@ -37,7 +32,6 @@ export default function LogIn() {
 
             return transaction.set(userDocRef, { displayName: user.displayName, userPic: user.photoURL, email: user.email, userID: user.uid });
         });
-        // window.location.href = '/'
     }
 
     const signUp = async () => {
@@ -47,14 +41,12 @@ export default function LogIn() {
                 signupEmail,
                 signupPassword
             );
-            console.log(user);
 
             // make sure user doesnt already exist before saving to users collection
             const userDocRef = doc(db, "users", user.uid);
             await runTransaction(db, async (transaction) => {
 
                 const existingUser = await transaction.get(userDocRef);
-                console.log('existing user', existingUser)
 
                 if (existingUser.exists()) {
                     return;
@@ -74,8 +66,7 @@ export default function LogIn() {
                 auth,
                 loginEmail,
                 loginPassword
-            );
-            // window.location.href = '/'
+            )
         } catch (error) {
             console.log(error.message);
         }
@@ -85,10 +76,6 @@ export default function LogIn() {
         <Layout>
 
             <div className="landing">
-                {/* <div className="sect-1">
-                    <h1>Welcome to Been There</h1>
-                    <p>A place where we can easily keep track of all the cities we have traveled to.</p>
-                </div> */}
                 <div className="sect-a">
                     <div className="overlay">
                         <div className="sect-a-inner">
@@ -98,27 +85,25 @@ export default function LogIn() {
                     </div>
                 </div>
                 <div className="sect-b">
-                    <div className="login">
+                    <div className="login" id="login">
                         <div className="login-tile">
-                            <label>Sign In With Email</label>
+                            <label>Log In With Google</label>
+                            <Button variant="contained" startIcon={<GoogleIcon />} sx={{ mt: 3 }} style={{ backgroundColor: "#99c8f1" }} onClick={loginWithGoogle}>Log in With Google</Button>
+                        </div>
+
+                        <div className="login-tile">
+                            <label>Log In With Email</label>
                             <TextField fullWidth label="Email" margin="normal" onChange={e => setLoginEmail(e.target.value)} />
                             <TextField fullWidth label="Password" margin="normal" onChange={e => setLoginPassword(e.target.value)} />
-                            {/* <Button onClick={signIn} variant="contained" startIcon={<EmailIcon/>} sx={{ mt: 3 }}>Sign In With Email</Button> */}
-
-                            <Button onClick={signIn} variant="contained" startIcon={<EmailIcon />} sx={{ mt: 3 }} style={{ backgroundColor: "#99c8f1" }}>Sign In With Email</Button>
-                        </div>
-                        <div className="login-tile">
-                            <label>Sign Up/In With Google</label>
-                            <Button variant="contained" startIcon={<GoogleIcon />} sx={{ mt: 3 }} style={{ backgroundColor: "#99c8f1" }} onClick={loginWithGoogle}>Google</Button>
+                            <Button onClick={signIn} variant="contained" startIcon={<EmailIcon />} sx={{ mt: 3 }} style={{ backgroundColor: "#99c8f1" }}>Log In With Email</Button>
                         </div>
 
-
-                        <form className="login-tile">
+                        {/* <form className="login-tile">
                             <label>Sign Up With Email</label>
                             <TextField fullWidth label="Email" margin="normal" onChange={e => setSignupEmail(e.target.value)} />
                             <TextField fullWidth label="Password" margin="normal" onChange={e => setSignupPassword(e.target.value)} />
                             <Button onClick={signUp} variant="contained" startIcon={<EmailIcon />} sx={{ mt: 3 }} style={{ backgroundColor: "#99c8f1" }} >Sign Up With Email</Button>
-                        </form>
+                        </form> */}
                     </div>
                 </div>
             </div>

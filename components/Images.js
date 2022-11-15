@@ -11,7 +11,6 @@ function Images() {
     const [imageList, setImageList] = useState([])
     const [loading, setLoading] = useState(true)
     const [isHovering, setIsHovering] = useState(false);
-    console.log('imageList', imageList)
 
     const handleMouseOver = () => {
         setIsHovering(true)
@@ -21,7 +20,6 @@ function Images() {
         setIsHovering(false)
     }
 
-    // TODO make sure this is working because now im saving images userid/cityid-filename
     const getCityDetails = async (urls) => {
         try {
             const imagesWithCityDetails = await Promise.all(urls.map(async (url) => {
@@ -30,7 +28,7 @@ function Images() {
                 const docRef = doc(db, "cities", `${cityID}`)
                 const docSnap = await getDoc(docRef)
                 const city = docSnap.data()
-                // console.log('city', city)
+
                 return {
                     url: url,
                     location: `${city.name}, ${city.country}`,
@@ -46,7 +44,6 @@ function Images() {
 
     useEffect(() => {
         async function getUrls() {
-            // TODO figure out how to get all files
             const imageListRef = ref(storage, '/')
             const response = await listAll(imageListRef)
             const folderRefs = response.prefixes
@@ -56,9 +53,7 @@ function Images() {
                 imageRefs.push(...res.items)
             }
             const urls = await Promise.all(imageRefs.map(item => getDownloadURL(item)))
-            console.log('urls', urls)
             const deets = await getCityDetails(urls)
-            // console.log('deets', deets)
             setImageList(deets)
         }
         getUrls()
