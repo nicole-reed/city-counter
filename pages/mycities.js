@@ -71,7 +71,7 @@ export default function MyCities() {
         <Layout>
             <CityContext.Provider value={{ showAlert }}>
                 <Container>
-                    <div className="profile">
+                    <div className="my-cities">
                         <h1 className="title-sm">Hey {user.displayName} </h1>
                         <h2 className="city-count">You have been to {cityCount == 1 ? '1 city!' : `${cityCount} cities!`}</h2>
                     </div>

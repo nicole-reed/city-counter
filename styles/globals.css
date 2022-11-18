@@ -10,9 +10,6 @@ ul {
   list-style: none;
 }
 
-.profile {
-  margin-bottom: 3rem;
-}
 .profile-img-cont{
 display: flex;
 justify-content: center;
@@ -73,9 +70,18 @@ h1, h2, p {
   font-size: 3rem;
 }
 
-.title-xs {
+.my-cities {
+  margin-bottom: 2rem;
+}
+
+.my-cities h2 {
+  font-size: 1.5rem;
+}
+
+.city-count {
   display: flex;
   justify-content: center;
+  text-align: center;
   margin: .5rem;
   line-height: 1;
   font-size: 2rem;
