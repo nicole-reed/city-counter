@@ -5,7 +5,6 @@ import { Container, ImageList, ImageListItem, ImageListItemBar } from '@mui/mate
 import { useRouter } from 'next/router';
 import Loading from './Loading';
 import { doc, getDoc } from '@firebase/firestore';
-import Image from "next/image";
 
 function Images() {
     const router = useRouter();
@@ -85,8 +84,7 @@ function Images() {
                                 onClick={() => goToImagePage(img.url, img.user)}
                                 onMouseOver={handleMouseOver}
                                 onMouseOut={handleMouseOut}
-                                layout='fill'
-                                unoptimized
+
                             />
                             {isHovering && <ImageListItemBar
                                 sx={{

@@ -12,7 +12,6 @@ import { getDownloadURL, listAll, ref } from "@firebase/storage";
 import Loading from "../../components/Loading";
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import Image from "next/image";
 
 export default function UserProfile({ }) {
     const theme = useTheme();

@@ -6,7 +6,6 @@ import { useEffect, useState } from "react"
 import Layout from "../../components/Layout"
 import Loading from "../../components/Loading"
 import { db, storage } from "../../firebase"
-import Image from "next/image";
 
 export default function FullImage() {
     const router = useRouter()
@@ -52,9 +51,22 @@ export default function FullImage() {
             const url = await getDownloadURL(pathRef)
             setImage(url)
         }
+        async function getCity() {
+
+            const docRef = doc(db, "cities", `${cityID}`)
+            const docSnap = await getDoc(docRef)
+
+            if (docSnap.exists()) {
+                setCity(docSnap.data())
+            } else {
+                console.log('No doc')
+            }
+            setLoading(false)
+        }
+
         getImage()
         getCity()
-    }, [cityID, file, getCity]);
+    }, [cityID, file]);
 
     if (loading) return <Loading type="bubbles" color="lightblue" />;
     return (

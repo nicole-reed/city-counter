@@ -1,7 +1,7 @@
 import { addDoc, collection, serverTimestamp } from "@firebase/firestore"
 import { Button, Container, MenuItem, TextField } from "@mui/material"
 import { useContext, useEffect, useRef, useState } from "react"
-import { CityContext } from "../pages/CityContext"
+import { CityContext } from "../components/CityContext"
 import { db } from "../firebase"
 import { useAuth } from "../Auth"
 import axios from "axios"

@@ -6,7 +6,6 @@ import Layout from "../../components/Layout"
 import { Button, Container, Input, TextField, Typography } from "@mui/material";
 import { getDownloadURL, ref, uploadBytes } from "@firebase/storage";
 import { doc, getDoc, updateDoc } from "@firebase/firestore";
-
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -14,10 +13,7 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
-
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Image from "next/image";
-
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;

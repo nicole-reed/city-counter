@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import Loading from './Loading';
 import DeleteImage from './DeleteImage';
 import LinearIndeterminate from './LinearIndeterminate';
-import Image from "next/image";
 
 function UploadImage({ userID }) {
     const { currentUser } = useAuth();

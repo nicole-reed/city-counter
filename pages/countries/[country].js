@@ -7,7 +7,7 @@ import AddCityForm from '../../components/AddCityForm';
 import Layout from '../../components/Layout';
 import Loading from '../../components/Loading';
 import { db } from '../../firebase';
-import { CityContext } from '../CityContext';
+import { CityContext } from '../components/CityContext';
 
 
 const Country = () => {

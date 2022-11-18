@@ -7,7 +7,7 @@ import Layout from "../components/Layout"
 import { Alert, Container, Grid, Snackbar } from "@mui/material";
 import Cities from "../components/Cities";
 import AddCityForm from "../components/AddCityForm";
-import { CityContext } from "./CityContext";
+import { CityContext } from "../components/CityContext";
 
 export default function MyCities() {
     const { currentUser } = useAuth();
