@@ -73,7 +73,7 @@ export default function MyCities() {
                 <Container>
                     <div className="profile">
                         <h1 className="title-sm">Hey {user.displayName} </h1>
-                        <h2 className="title-xs">You have been to {cityCount == 1 ? '1 city!' : `${cityCount} cities!`}</h2>
+                        <h2 className="city-count">You have been to {cityCount == 1 ? '1 city!' : `${cityCount} cities!`}</h2>
                     </div>
 
                     <Grid container spacing={{ xs: 1 }} columns={{ xs: 2, s: 4, md: 12 }} mb={2}>

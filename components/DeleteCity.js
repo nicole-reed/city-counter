@@ -10,14 +10,11 @@ import { IconButton } from '@mui/material';
 import { useRouter } from 'next/router';
 import { deleteDoc, doc } from '@firebase/firestore';
 import { db } from "../firebase";
-import { useAuth } from '../Auth';
 
 export default function DeleteCity() {
     const [open, setOpen] = React.useState(false);
-    const { currentUser } = useAuth();
     const router = useRouter();
     const cityID = router.query;
-    console.log('cityID', cityID)
 
     const deleteCity = async (event) => {
         try {
@@ -27,10 +24,8 @@ export default function DeleteCity() {
             await deleteDoc(docRef)
             router.push('/')
         } catch (error) {
-            console.log('unable to delete city')
-            router.push('/')
+            console.log(error.message)
         }
-
     }
 
     const handleClickOpen = () => {
@@ -64,7 +59,7 @@ export default function DeleteCity() {
                     <Button onClick={handleClose}>Cancel</Button>
                     <Button onClick={deleteCity} autoFocus>
                         Delete
-          </Button>
+                    </Button>
                 </DialogActions>
             </Dialog>
         </div>

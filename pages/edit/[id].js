@@ -12,10 +12,6 @@ const Detail = ({ cityProps }) => {
     const router = useRouter();
     const { currentUser } = useAuth();
 
-    if (currentUser.userID !== city.userID) {
-        router.push('/')
-    }
-
     return (
         <Layout>
             <Container>

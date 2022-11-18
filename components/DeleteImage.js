@@ -10,7 +10,7 @@ import { IconButton } from '@mui/material';
 import { storage } from "../firebase";
 import { deleteObject, ref } from '@firebase/storage';
 
-export default function DeleteImage({ userID, cityid, url }) {
+export default function DeleteImage({ cityid, url }) {
     const [open, setOpen] = useState(false);
     const regex = /%2F(.*?)\?/
     const [, match] = url.match(regex) || []

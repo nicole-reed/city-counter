@@ -342,6 +342,11 @@ background: linear-gradient(180deg, rgba(163,128,97,1) 0%, rgba(255,255,255,1) 8
     width: 90%
   }
 
+  .city-count {
+    text-align: center;
+    margin-top: .5rem;;
+  }
+
   .login {
     max-width: 100%;
   }

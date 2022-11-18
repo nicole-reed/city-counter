@@ -1,8 +1,7 @@
 import { updateDoc, doc, serverTimestamp } from "@firebase/firestore"
 import { Button, Container, TextField } from "@mui/material"
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import DeleteCity from "../components/DeleteCity"
-
 import { db } from "../firebase"
 import { useRouter } from "next/router"
 
@@ -10,7 +9,7 @@ const EditCityForm = ({ cityDetails }) => {
     const router = useRouter();
     const cityID = router.query;
     const inputAreaRef = useRef();
-    const [city, setCity] = useState({ name: cityDetails.name, country: cityDetails.country, month: cityDetails.month, year: cityDetails.year, details: cityDetails.details ? cityDetails.details : '' })
+    const [city, setCity] = useState({ name: cityDetails.name, country: cityDetails.country, month: cityDetails.month, year: cityDetails.year, details: cityDetails.details ? cityDetails.details : '', userID: cityDetails.userID })
 
     const onSubmit = async () => {
         try {
@@ -21,8 +20,7 @@ const EditCityForm = ({ cityDetails }) => {
             setCity({ name: city.name, country: city.country, month: city.month, year: city.year, details: city.details })
             router.push(`/cities/${cityID.id}`)
         } catch (error) {
-            console.log('unable to delete city')
-            router.push('/')
+            console.log(error.message)
         }
     }
 
