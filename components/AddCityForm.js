@@ -317,8 +317,8 @@ const AddCityForm = ({ currentCountry }) => {
         <Container>
             <div className="add-city-form" ref={inputAreaRef}>
                 <h1>Add A City</h1>
-                <TextField select fullWidth label="country" margin="normal" required={true} value={city.country} onChange={e => setCity({ ...city, country: e.target.value })}>{countryList.map((country) => (
-                    <MenuItem value={country}>{country}</MenuItem>
+                <TextField select fullWidth label="country" margin="normal" required={true} value={city.country} onChange={e => setCity({ ...city, country: e.target.value })}>{countryList.map((country, index) => (
+                    <MenuItem key={index} value={country}>{country}</MenuItem>
                 ))}</TextField>
                 <TextField fullWidth label="city" margin="normal" required={true} value={city.name} onChange={e => setCity({ ...city, name: e.target.value })} />
                 <TextField fullWidth label="month" margin="normal" required={true} value={city.month} onChange={e => setCity({ ...city, month: e.target.value })} />

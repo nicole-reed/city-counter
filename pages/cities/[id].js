@@ -49,7 +49,7 @@ const Detail = ({ cityProps }) => {
                         <Typography variant="h4" component="div">{city.name}</Typography>
                         <Typography variant="p" component="div"><a href={`/countries/${city.country}`}>{city.country}</a></Typography>
                         <Typography variant="p" component="div">{city.month} {city.year}</Typography>
-                        {city.details && <Typography variant="h6" component="div">"{city.details}"</Typography>}
+                        {city.details && <Typography variant="h6" component="div">&quot;{city.details}&quot;</Typography>}
                         <Avatar sx={{ width: 96, height: 96 }} src={user.userPic}></Avatar>
                         <Typography variant="p" component="div"><a href={`/users/${user.userID}`}>{user.displayName}</a></Typography>
 
