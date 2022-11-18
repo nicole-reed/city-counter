@@ -6,8 +6,9 @@ import { useEffect, useState } from "react"
 import Layout from "../../components/Layout"
 import Loading from "../../components/Loading"
 import { db, storage } from "../../firebase"
+import Image from "next/image";
 
-export default function Image() {
+export default function FullImage() {
     const router = useRouter()
     const fileName = router.query.filename
     const cityID = fileName[0]
@@ -30,7 +31,7 @@ export default function Image() {
             }
         }
         getUser()
-    }, [city])
+    }, [city, userID])
 
     const getCity = async () => {
         const docRef = doc(db, "cities", `${cityID}`)
@@ -53,7 +54,7 @@ export default function Image() {
         }
         getImage()
         getCity()
-    }, []);
+    }, [cityID, file, getCity]);
 
     if (loading) return <Loading type="bubbles" color="lightblue" />;
     return (
@@ -62,9 +63,7 @@ export default function Image() {
 
                 <ImageList cols={1} gap={8}>
                     <ImageListItem className="parent">
-                        <img className="full-img" src={image}>
-                        </img>
-
+                        <img className="full-img" src={image} alt={'full image'} />
                     </ImageListItem>
                     <h2 style={{ margin: "auto" }}><a href={`/cities/${cityID}`}>{city.name}</a>, <a href={`/countries/${city.country}`}>{city.country}</a></h2>
                     <div className='pic-info'>

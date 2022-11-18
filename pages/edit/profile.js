@@ -16,6 +16,7 @@ import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Image from "next/image";
 
 
 const ExpandMore = styled((props) => {
@@ -62,7 +63,7 @@ export default function Profile() {
             }
         }
         getUser()
-    }, [])
+    }, [currentUser.uid])
 
 
 
@@ -110,7 +111,7 @@ export default function Profile() {
             <Container>
                 <h1 className="title-sm">{user.displayName} </h1>
                 <div className="profile-img-cont">
-                    <img className="profile-img" src={user.userPic} />
+                    <img className="profile-img" src={user.userPic} alt={'profile pic'} />
                 </div>
 
                 <Card className="about-me">

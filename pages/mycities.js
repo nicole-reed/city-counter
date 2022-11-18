@@ -31,7 +31,7 @@ export default function MyCities() {
             }
         }
         getUser()
-    }, [])
+    }, [currentUser.uid])
 
     const showAlert = (type, msg) => {
         setAlertMessage(msg);
@@ -60,7 +60,7 @@ export default function MyCities() {
         });
 
         return unsubscribe;
-    }, [])
+    }, [currentUser.uid])
 
     if (loading) {
         return <Loading type="bubbles" color="lightblue" />

@@ -32,7 +32,7 @@ const Detail = ({ cityProps }) => {
         }
         getUser()
         setLoading(false)
-    }, [])
+    }, [city.userID])
 
     if (loading) { return <Loading type="bubbles" color="lightblue" /> }
     return (

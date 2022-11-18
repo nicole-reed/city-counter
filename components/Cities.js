@@ -26,7 +26,7 @@ const Cities = ({ user }) => {
         });
 
         return unsubscribe;
-    }, [])
+    }, [user.userID])
 
     if (loading) {
         return <Loading type="bubbles" color="lightblue" />

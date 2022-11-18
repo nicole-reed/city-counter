@@ -33,7 +33,7 @@ function Map() {
     useEffect(() => {
         const cityColRef = collection(db, "cities");
 
-        const cityQuery = query(cityColRef, where("email", "==", currentUser?.email))
+        const cityQuery = query(cityColRef, where("userID", "==", currentUser?.uid))
 
         const unsubscribe = onSnapshot(cityQuery, (querySnapshot) => {
             setCities(querySnapshot.docs.map(doc => ({
@@ -44,7 +44,7 @@ function Map() {
         });
 
         return unsubscribe;
-    }, [])
+    }, [currentUser?.uid])
 
     if (loading) {
         return <Loading type="bubbles" color="lightblue" />

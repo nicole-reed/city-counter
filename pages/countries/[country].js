@@ -48,7 +48,7 @@ const Country = () => {
         });
 
         return unsubscribe;
-    }, [])
+    }, [country.country, currentUser.uid])
 
     if (loading) return <Loading type="bubbles" color="lightblue" />;
     return (

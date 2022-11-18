@@ -12,6 +12,7 @@ import { getDownloadURL, listAll, ref } from "@firebase/storage";
 import Loading from "../../components/Loading";
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import Image from "next/image";
 
 export default function UserProfile({ }) {
     const theme = useTheme();
@@ -40,7 +41,7 @@ export default function UserProfile({ }) {
         }
         getUser()
         setLoading(false)
-    }, [])
+    }, [userID])
 
     useEffect(() => {
         async function getUrls() {
@@ -69,7 +70,7 @@ export default function UserProfile({ }) {
         });
 
         return unsubscribe;
-    }, [])
+    }, [userID])
 
     const goToCityPage = async (url, userID) => {
         const regex = /o\/(.*?)%/
@@ -126,6 +127,7 @@ export default function UserProfile({ }) {
                                 alt={`${img}`}
                                 loading="lazy"
                                 onClick={() => goToCityPage(img)}
+
                             />
                         </ImageListItem>
                     ))}

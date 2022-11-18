@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import Loading from './Loading';
 import DeleteImage from './DeleteImage';
 import LinearIndeterminate from './LinearIndeterminate';
+import Image from "next/image";
 
 function UploadImage({ userID }) {
     const { currentUser } = useAuth();
@@ -41,7 +42,7 @@ function UploadImage({ userID }) {
         }
         getUrls()
         setLoading(false)
-    }, []);
+    }, [city.id]);
 
 
     if (loading) { return <Loading type="bubbles" color="lightblue" /> }
