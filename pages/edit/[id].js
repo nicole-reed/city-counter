@@ -4,11 +4,17 @@ import EditCityForm from "../../components/EditCityForm"
 import { db } from "../../firebase"
 import Layout from "../../components/Layout";
 import { useRouter } from "next/router"
+import { useAuth } from "../../Auth";
 
 
 const Detail = ({ cityProps }) => {
     const city = JSON.parse(cityProps)
     const router = useRouter();
+    const { currentUser } = useAuth();
+
+    if (currentUser.userID !== city.userID) {
+        router.push('/')
+    }
 
     return (
         <Layout>

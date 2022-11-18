@@ -1,5 +1,5 @@
 import { collection, onSnapshot, query, where } from '@firebase/firestore';
-import { Card, Container, Typography, Grid } from '@mui/material';
+import { Card, Container, Typography, Grid, Snackbar, Alert } from '@mui/material';
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../../Auth';
@@ -19,7 +19,7 @@ const Country = () => {
     const [open, setOpen] = useState(false);
     const [alertType, setAlertType] = useState("success");
     const [alertMessage, setAlertMessage] = useState("");
-    const [city, setCity] = useState({ name: '', country: '', month: '', year: '' })
+    // const [city, setCity] = useState({ name: '', country: '', month: '', year: '' })
 
     const showAlert = (type, msg) => {
         setAlertMessage(msg);
@@ -27,6 +27,12 @@ const Country = () => {
         setOpen(true);
     }
 
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false)
+    };
 
     useEffect(() => {
         const cityColRef = collection(db, "cities");
@@ -69,6 +75,11 @@ const Country = () => {
                         </Grid>
 
                     </Grid>
+                    <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+                        <Alert onClose={handleClose} severity={alertType} sx={{ width: '100%' }}>
+                            {alertMessage}
+                        </Alert>
+                    </Snackbar>
                 </Container>
             </CityContext.Provider>
         </Layout>

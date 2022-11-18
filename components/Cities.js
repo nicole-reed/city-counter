@@ -9,7 +9,7 @@ import { Container } from "@mui/material";
 const Cities = ({ user }) => {
     const [cities, setCities] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { currentUser } = useAuth();
+    // const { currentUser } = useAuth();
 
     // fetch cities by user.userID which was passed down 
     useEffect(() => {

@@ -17,13 +17,20 @@ export default function DeleteCity() {
     const { currentUser } = useAuth();
     const router = useRouter();
     const cityID = router.query;
+    console.log('cityID', cityID)
 
     const deleteCity = async (event) => {
-        // to stop the other function from firing
-        event.stopPropagation();
-        const docRef = doc(db, "cities", `${cityID.id}`);
-        await deleteDoc(docRef)
-        router.push('/')
+        try {
+            // to stop the other function from firing
+            event.stopPropagation();
+            const docRef = doc(db, "cities", `${cityID.id}`);
+            await deleteDoc(docRef)
+            router.push('/')
+        } catch (error) {
+            console.log('unable to delete city')
+            router.push('/')
+        }
+
     }
 
     const handleClickOpen = () => {

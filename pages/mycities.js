@@ -79,7 +79,7 @@ export default function MyCities() {
                     <Grid container spacing={{ xs: 1 }} columns={{ xs: 2, s: 4, md: 12 }} mb={2}>
 
                         <Grid item xs={6} >
-                            <Cities user={user} />
+                            {cities.length > 0 ? <Cities user={user} /> : ''}
                         </Grid>
 
                         <Grid item xs={6} >

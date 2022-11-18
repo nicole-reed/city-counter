@@ -14,7 +14,6 @@ const Detail = ({ cityProps }) => {
     const { currentUser } = useAuth();
     const city = JSON.parse(cityProps)
     const cityArr = [city]
-    console.log('cityArr', cityArr)
     const router = useRouter();
     const currentCity = router.query
     const [user, setUser] = useState({})

@@ -162,7 +162,7 @@ export default function Profile() {
                 <Card className="about-me">
                     <CardHeader
                         title="Edit Bio"
-                        subheader={`"${user.aboutMe && user.aboutMe}"`}
+                        subheader={user.aboutMe && `"${user.aboutMe}"`}
                     />
                     <CardActions disableSpacing>
                         <ExpandMore

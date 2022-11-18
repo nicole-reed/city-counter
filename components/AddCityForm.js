@@ -280,18 +280,21 @@ const AddCityForm = ({ currentCountry }) => {
     }
 
     const onSubmit = async () => {
+        try {
+            if (city.name == "" || city.country == "" || city.month == "" || city.year == "" || city.name == " " || city.country == " " || city.month == " " || city.year == " ") {
+                showAlert('error', 'All required fields must be filled out')
+            } else {
+                // add city
+                const colRef = collection(db, "cities")
+                const { longitude, latitude } = await getCoords()
 
-        if (city.name == "" || city.country == "" || city.month == "" || city.year == "") {
-            showAlert('error', 'All required fields must be filled out')
-        } else {
-            // add city
-            const colRef = collection(db, "cities")
-            const { longitude, latitude } = await getCoords()
+                await addDoc(colRef, { ...city, email: currentUser.email, displayName: currentUser.displayName, userPic: currentUser.photoURL, userID: currentUser.uid, timestamp: serverTimestamp(), longitude, latitude })
 
-            await addDoc(colRef, { ...city, email: currentUser.email, displayName: currentUser.displayName, userPic: currentUser.photoURL, userID: currentUser.uid, timestamp: serverTimestamp(), longitude, latitude })
-
-            setCity({ name: '', country: '', month: '', year: '', details: '' })
-            showAlert('success', `City added`)
+                setCity({ name: '', country: '', month: '', year: '', details: '' })
+                showAlert('success', `City added`)
+            }
+        } catch (error) {
+            console.log(error.message)
         }
     }
 

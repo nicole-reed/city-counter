@@ -13,12 +13,17 @@ const EditCityForm = ({ cityDetails }) => {
     const [city, setCity] = useState({ name: cityDetails.name, country: cityDetails.country, month: cityDetails.month, year: cityDetails.year, details: cityDetails.details ? cityDetails.details : '' })
 
     const onSubmit = async () => {
-        // update city
-        const docRef = doc(db, "cities", `${cityID.id}`)
-        const update = { ...city, timestamp: serverTimestamp() }
-        await updateDoc(docRef, update)
-        setCity({ name: city.name, country: city.country, month: city.month, year: city.year, details: city.details })
-        router.push(`/cities/${cityID.id}`)
+        try {
+            // update city
+            const docRef = doc(db, "cities", `${cityID.id}`)
+            const update = { ...city, timestamp: serverTimestamp() }
+            await updateDoc(docRef, update)
+            setCity({ name: city.name, country: city.country, month: city.month, year: city.year, details: city.details })
+            router.push(`/cities/${cityID.id}`)
+        } catch (error) {
+            console.log('unable to delete city')
+            router.push('/')
+        }
     }
 
     return (

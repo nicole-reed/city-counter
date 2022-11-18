@@ -16,7 +16,7 @@ export default function DeleteImage({ userID, cityid, url }) {
     const [, match] = url.match(regex) || []
 
     const deleteImage = async () => {
-        const fileName = `${userID}/${cityid}`
+        const fileName = `${cityid}/${match}`
         const deleteRef = ref(storage, `${fileName}`)
         await deleteObject(deleteRef)
         handleClose()
