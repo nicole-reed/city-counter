@@ -146,7 +146,7 @@ export default function UserProfile({ }) {
                     <div className="user-tile">
                         <Avatar sx={{ width: 150, height: 150 }} src={user.userPic}></Avatar>
                         <Typography variant="h4" component="div">{user.displayName}</Typography>
-                        {follows ? <Button style={{ color: "#99c8f1" }} onClick={() => handleUnfollowClick(user.userID)}>Unfollow</Button> : <Button style={{ color: "#99c8f1" }} onClick={() => handleFollowClick(user.userID)}>Follow</Button>}
+                        {userID !== currentUser.uid && follows ? <Button style={{ color: "#99c8f1" }} onClick={() => handleUnfollowClick(user.userID)}>Unfollow</Button> : <Button style={{ color: "#99c8f1" }} onClick={() => handleFollowClick(user.userID)}>Follow</Button>}
                         {user.aboutMe && <Typography variant="p" component="div">{user.aboutMe}</Typography>}
                         <LocationCityOutlinedIcon sx={{ color: "#99c8f1" }} fontSize="large" />
                         <Typography variant="p" component="div" style={{ fontWeight: "bolder" }}>{cities.length} cities visited</Typography>
