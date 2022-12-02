@@ -21,6 +21,7 @@
     "react-loading": "^2.0.3",
     "react-simple-maps": "^3.0.0",
     "react-tooltip": "^4.2.21",
+    "sharp": "^0.31.2",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {

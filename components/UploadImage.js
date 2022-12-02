@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import Loading from './Loading';
 import DeleteImage from './DeleteImage';
 import LinearIndeterminate from './LinearIndeterminate';
+import Image from 'next/image';
 
 function UploadImage({ userID }) {
     const { currentUser } = useAuth();
@@ -50,6 +51,24 @@ function UploadImage({ userID }) {
         <Container>
 
             {!showProgressBar ?
+
+                // <>
+                //     {imageList.map((url) => {
+                //         <div style={{ position: 'relative', width: '30%', height: 'auto' }}>
+                //             <Image
+                //                 src={url}
+                //                 alt={`${url}`}
+                //                 layout='fill'
+                //                 objectFit='contain'
+
+                //             />
+                //             {
+                //                 userID == currentUser.uid && <DeleteImage userID={currentUser.uid} cityid={city.id} url={url} />
+                //             }
+                //         </div>
+                //     })}
+                // </>
+
                 <ImageList cols={1} gap={8}>
                     {imageList.map((url) => (
 
