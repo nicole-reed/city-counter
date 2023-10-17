@@ -2,7 +2,7 @@ import { arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, onSnapshot, 
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react";
 import { db, storage } from "../../firebase";
-import Map from "../../components/Map";
+// import Map from "../../components/Map";
 import Layout from "../../components/Layout";
 import { Avatar, Button, Container, ImageList, ImageListItem, Typography } from "@mui/material";
 import LocationCityOutlinedIcon from '@mui/icons-material/LocationCityOutlined';
@@ -165,7 +165,7 @@ export default function UserProfile({ }) {
                                 <button className="btn" onClick={toggleCityList}><ExpandLessIcon fontSize="small" /></button>
                             </>}
                     </div>
-                    <Map cities={cities} />
+                    {/* <Map cities={cities} /> */}
 
                 </div>
                 <ImageList cols={matches ? 3 : 1} gap={8}>

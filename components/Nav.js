@@ -59,7 +59,7 @@ const ResponsiveAppBar = () => {
                             }}
                         >
                             Been There
-          </Typography>
+                        </Typography>
 
                         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                             <IconButton
@@ -120,7 +120,7 @@ const ResponsiveAppBar = () => {
                         }}
                     >
                         Been There
-          </Typography>
+                    </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
@@ -151,9 +151,9 @@ const ResponsiveAppBar = () => {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            <MenuItem>
+                            {/* <MenuItem>
                                 <Link className='nav-item' href="/map">Map</Link>
-                            </MenuItem>
+                            </MenuItem> */}
                             <MenuItem>
                                 <Link className='nav-item' href={`/users/${currentUser.uid}`}>Profile</Link>
                             </MenuItem>
@@ -186,9 +186,9 @@ const ResponsiveAppBar = () => {
                         Been There
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        <MenuItem>
+                        {/* <MenuItem>
                             <Link href="/map">Map</Link>
-                        </MenuItem>
+                        </MenuItem> */}
                         <MenuItem>
                             <Link className='nav-item' href={`/users/${currentUser.uid}`}>Profile</Link>
                         </MenuItem>
