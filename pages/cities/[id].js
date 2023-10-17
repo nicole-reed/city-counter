@@ -8,7 +8,7 @@ import { useRouter } from "next/router"
 import { useAuth } from "../../Auth";
 import { useEffect, useState } from "react";
 import Loading from "../../components/Loading";
-import Map from "../../components/Map";
+// import Map from "../../components/Map";
 
 const Detail = ({ cityProps }) => {
     const { currentUser } = useAuth();
@@ -54,7 +54,7 @@ const Detail = ({ cityProps }) => {
                         <Typography variant="p" component="div"><a href={`/users/${user.userID}`}>{user.displayName}</a></Typography>
 
                     </div>
-                    <Map cities={cityArr} />
+                    {/* <Map cities={cityArr} /> */}
                 </div>
                 <UploadImage userID={user.userID} mt={3} />
 
